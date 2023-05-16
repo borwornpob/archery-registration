@@ -81,6 +81,7 @@ export default function Dashboard() {
             alert(error.message);
         } else {
             setAthletes(data);
+            setSearchResults(data);
             console.log(data);
         }
     };
