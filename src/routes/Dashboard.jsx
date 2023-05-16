@@ -217,7 +217,7 @@ export default function Dashboard() {
             <FormControl id="search" mt="1rem">
                 <FormLabel>ค้นหานักกีฬา</FormLabel>
                 <Input
-                    placeholder="ค้นหานักกีฬา"
+                    placeholder="ชื่อนักกีฬาที่ต้องการค้นหา"
                     onChange={(e) => {
                         setSearchTerm(e.target.value);
                     }}
