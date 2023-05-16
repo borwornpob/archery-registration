@@ -232,6 +232,8 @@ export default function Dashboard() {
                             <Tr>
                                 <Th color="brand.100">ชื่อ</Th>
                                 <Th color="brand.100">นามสกุล</Th>
+                                <Th color="brand.100">ชื่อ (ภาษาอังกฤษ)</Th>
+                                <Th color="brand.100">นามสกุล (ภาษาอังกฤษ)</Th>
                                 <Th color="brand.100">เพศ</Th>
                                 <Th color="brand.100">Division</Th>
                                 <Th color="brand.100">Class</Th>
@@ -247,6 +249,12 @@ export default function Dashboard() {
                                     </Td>
                                     <Td color="brand.100">
                                         {athlete.surname_thai}
+                                    </Td>
+                                    <Td color="brand.100">
+                                        {athlete.name_english}
+                                    </Td>
+                                    <Td color="brand.100">
+                                        {athlete.surname_english}
                                     </Td>
                                     <Td color="brand.100">{athlete.sex}</Td>
                                     <Td color="brand.100">

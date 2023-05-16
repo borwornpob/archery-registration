@@ -44,7 +44,7 @@ export default function Footer() {
                             as="a"
                             onClick={() => {
                                 location.href =
-                                    "https://line.me/R/ti/p/%40cud_sapa";
+                                    "https://line.me/R/ti/p/0982893299";
                             }}
                             aria-label="Line"
                             icon={<FaLine fontSize="1.25rem" />}
