@@ -1,12 +1,57 @@
-import { Container, Heading } from "@chakra-ui/react";
-import React, { useState } from "react";
+import {
+    Container,
+    Heading,
+    Text,
+    VStack,
+    HStack,
+    Button,
+} from "@chakra-ui/react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../helper/UserContext";
+import { useNavigate } from "react-router-dom";
+import useWindowDimensions from "../helper/dimensions";
 
 export default function Home() {
-  const [count, setCount] = useState(0);
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
-  return (
-    <Container>
-      <Heading>Hello World!</Heading>
-    </Container>
-  );
+    let { width } = useWindowDimensions();
+    width = width * 0.88;
+
+    return (
+        <Container>
+            <VStack>
+                <Button
+                    size="lg"
+                    variant="primary"
+                    width={width}
+                    onClick={() => {
+                        navigate("/register");
+                    }}
+                >
+                    <Text>ลงทะเบียน</Text>
+                </Button>
+                <Button
+                    size="lg"
+                    variant="secondary"
+                    width={width}
+                    onClick={() => {
+                        navigate("/login");
+                    }}
+                >
+                    <Text>เข้าสู่ระบบ</Text>
+                </Button>
+                <Button
+                    size="lg"
+                    variant="secondary"
+                    width={width}
+                    onClick={() => {
+                        navigate("/athletecheck");
+                    }}
+                >
+                    <Text>ตรวจสอบรายชื่อนักกีฬา</Text>
+                </Button>
+            </VStack>
+        </Container>
+    );
 }
