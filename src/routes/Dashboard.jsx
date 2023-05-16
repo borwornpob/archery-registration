@@ -88,7 +88,9 @@ export default function Dashboard() {
 
     function searchByName(array, searchTerm) {
         return array.filter(function (person) {
-            let result = person.name_thai.includes(searchTerm);
+            let result =
+                person.name_thai.includes(searchTerm) ||
+                athlete.name_english.includes(search);
             return result;
         });
     }

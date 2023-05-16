@@ -52,7 +52,10 @@ export default function AthleteCheck() {
 
     const searchAthlete = (search) => {
         const result = athletes.filter((athlete) => {
-            return athlete.name_thai.includes(search);
+            return (
+                athlete.name_thai.includes(search) ||
+                athlete.name_english.includes(search)
+            );
         });
         setSearchResult(result);
     };
@@ -110,17 +113,6 @@ export default function AthleteCheck() {
                                 <Td color="brand.100">{athlete.class}</Td>
                                 <Td color="brand.100">{athlete.club}</Td>
                                 <Td color="brand.100">{athlete.team_name}</Td>
-                                <Td color="brand.100">
-                                    <Button
-                                        variant="solid"
-                                        colorScheme="red"
-                                        onClick={() => {
-                                            handleDeleteAthlete(athlete.id);
-                                        }}
-                                    >
-                                        ลบ
-                                    </Button>
-                                </Td>
                             </Tr>
                         ))}
                     </Tbody>
