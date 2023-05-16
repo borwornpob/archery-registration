@@ -25,30 +25,69 @@ export default function Register() {
     const [nationalID, setNationalID] = useState("");
     const [password, setPassword] = useState("");
 
-    const { user, setUser } = useContext(UserContext);
-
     let { width } = useWindowDimensions();
 
     const navigate = useNavigate();
 
     const handleRegister = async () => {
-        const { data, error } = await supabase.from("users").insert([
-            {
-                name_thai: nameThai,
-                name_english: nameEng,
-                surname_thai: surnameThai,
-                surname_english: surnameEng,
-                club: club,
-                phonenumber: phoneNumber,
-                id: nationalID,
-                password: password,
-            },
-        ]);
+        if (checkRegisterData) {
+            if (checkIfUserExists) {
+                const { data, error } = await supabase.from("users").insert([
+                    {
+                        name_thai: nameThai,
+                        name_english: nameEng,
+                        surname_thai: surnameThai,
+                        surname_english: surnameEng,
+                        club: club,
+                        phonenumber: phoneNumber,
+                        id: nationalID,
+                        password: password,
+                    },
+                ]);
+                if (error) {
+                    alert(error.message);
+                } else {
+                    alert("ลงทะเบียนสำเร็จ");
+                    navigate("/");
+                }
+            } else {
+                alert("มีผู้ใช้งานนี้แล้ว");
+            }
+        } else {
+            alert("กรุณากรอกข้อมูลให้ครบ");
+        }
+    };
+
+    const checkIfUserExists = async () => {
+        const { data, error } = await supabase
+            .from("users")
+            .select("*")
+            .eq("id", nationalID);
         if (error) {
             alert(error.message);
         } else {
-            alert("ลงทะเบียนสำเร็จ");
-            navigate("/");
+            if (data.length === 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    };
+
+    const checkRegisterData = () => {
+        if (
+            nameThai === "" ||
+            nameEng === "" ||
+            surnameThai === "" ||
+            surnameEng === "" ||
+            club === "" ||
+            phoneNumber === "" ||
+            nationalID === "" ||
+            password === ""
+        ) {
+            return false;
+        } else {
+            return true;
         }
     };
 

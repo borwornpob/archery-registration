@@ -50,9 +50,11 @@ export default function Dashboard() {
         division: "",
         class: "",
         club: "",
-        team: null,
+        team: "",
         team_name: "",
     });
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -82,6 +84,18 @@ export default function Dashboard() {
             console.log(data);
         }
     };
+
+    function searchByName(array, searchTerm) {
+        return array.filter(function (person) {
+            let result = person.name_thai.includes(searchTerm);
+            return result;
+        });
+    }
+
+    useEffect(() => {
+        //when the search bar is chagned
+        setSearchResults(searchByName(athletes, searchTerm));
+    }, [searchTerm]);
 
     useEffect(() => {
         const cookie = Cookies.get("user");
@@ -113,7 +127,7 @@ export default function Dashboard() {
             newAthlete.division === "" ||
             newAthlete.class === "" ||
             newAthlete.club === "" ||
-            newAthlete.team === null
+            newAthlete.team === ""
         ) {
             return false;
         } else {
@@ -192,11 +206,25 @@ export default function Dashboard() {
                 ยินดีต้อนรับ {personalData.name_thai}{" "}
                 {personalData.surname_thai}
             </Text>
+            <Text>
+                มีนักกีฬาอยู่ในสังกัด {newAthlete.club} จำนวน {athletes.length}{" "}
+                คน
+            </Text>
             <Button onClick={onOpen} mt="1rem">
                 เพิ่มนักกีฬา
             </Button>
+            <FormControl id="search" mt="1rem">
+                <FormLabel>ค้นหานักกีฬา</FormLabel>
+                <Input
+                    placeholder="ค้นหานักกีฬา"
+                    onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                    }}
+                />
+            </FormControl>
             <VStack spacing="1rem" mt="1rem" maxW={width} align="start">
                 <Text>รายชื่อนักกีฬา</Text>
+
                 <TableContainer width={width}>
                     <Table variant="simple" backgroundColor="brand.400">
                         <Thead>
@@ -211,7 +239,7 @@ export default function Dashboard() {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {athletes.map((athlete) => (
+                            {searchResults.map((athlete) => (
                                 <Tr key={athlete.id}>
                                     <Td color="brand.100">
                                         {athlete.name_thai}
