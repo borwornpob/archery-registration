@@ -172,6 +172,19 @@ export default function Dashboard() {
         });
     };
 
+    const handleDeleteAthlete = async (id) => {
+        const { data, error } = await supabase
+            .from("athletes")
+            .delete()
+            .eq("id", id);
+        if (error) {
+            alert(error.message);
+        } else {
+            alert("ลบนักกีฬาสำเร็จ");
+            fetchAthletes(newAthlete.club);
+        }
+    };
+
     return (
         <Container maxW={width}>
             <Heading>Dashboard</Heading>
@@ -183,11 +196,9 @@ export default function Dashboard() {
                 เพิ่มนักกีฬา
             </Button>
             <VStack spacing="1rem" mt="1rem" maxW={width} align="start">
+                <Text>รายชื่อนักกีฬา</Text>
                 <TableContainer width={width}>
                     <Table variant="simple" backgroundColor="brand.400">
-                        <TableCaption placement="bottom">
-                            ตารางแสดงรายชื่อนักกีฬา
-                        </TableCaption>
                         <Thead>
                             <Tr>
                                 <Th color="brand.100">ชื่อ</Th>
@@ -216,6 +227,17 @@ export default function Dashboard() {
                                     <Td color="brand.100">{athlete.club}</Td>
                                     <Td color="brand.100">
                                         {athlete.team_name}
+                                    </Td>
+                                    <Td color="brand.100">
+                                        <Button
+                                            variant="solid"
+                                            colorScheme="red"
+                                            onClick={() => {
+                                                handleDeleteAthlete(athlete.id);
+                                            }}
+                                        >
+                                            ลบ
+                                        </Button>
                                     </Td>
                                 </Tr>
                             ))}
