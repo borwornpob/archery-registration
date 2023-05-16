@@ -75,6 +75,7 @@ export default function Login() {
                 <FormControl id="password" isRequired>
                     <FormLabel>รหัสผ่าน</FormLabel>
                     <Input
+                        type="password"
                         placeholder="รหัสผ่าน"
                         value={password}
                         onChange={(e) => {
