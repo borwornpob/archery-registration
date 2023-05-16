@@ -86,14 +86,16 @@ export default function Dashboard() {
         }
     };
 
-    function searchByName(array, searchTerm) {
-        return array.filter(function (person) {
-            let result =
-                person.name_thai.includes(searchTerm) ||
-                athlete.name_english.includes(search);
-            return result;
+    const searchByName = (athletes, searchTerm) => {
+        return athletes.filter((athlete) => {
+            return (
+                athlete.name_thai.includes(searchTerm) ||
+                athlete.name_english
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+            );
         });
-    }
+    };
 
     useEffect(() => {
         //when the search bar is chagned

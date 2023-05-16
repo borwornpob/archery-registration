@@ -54,7 +54,9 @@ export default function AthleteCheck() {
         const result = athletes.filter((athlete) => {
             return (
                 athlete.name_thai.includes(search) ||
-                athlete.name_english.includes(search)
+                athlete.name_english
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
             );
         });
         setSearchResult(result);
