@@ -27,12 +27,13 @@ export default function MobileDrawer() {
                 onClose={onClose}
                 finalFocusRef={btnRef}
             >
-                <VStack alignItems="left"></VStack>
-                {pages.map((page, i) => (
-                    <ChakraLink key={i} href={page.path}>
-                        <Button variant="text">{page.name}</Button>
-                    </ChakraLink>
-                ))}
+                <VStack alignItems="left">
+                    {pages.map((page, i) => (
+                        <ChakraLink key={i} href={page.path}>
+                            <Button variant="text">{page.name}</Button>
+                        </ChakraLink>
+                    ))}
+                </VStack>
             </CustomDrawer>
         </Flex>
     );

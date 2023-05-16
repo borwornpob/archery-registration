@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider, ColorModeScript, extendTheme } from "@chakra-ui/react";
 import { Button } from "./components/Button";
+import { Input } from "./components/Input";
 import App from "./App";
 
 const theme = extendTheme({
@@ -13,15 +14,16 @@ const theme = extendTheme({
                 transitionProperty: "brand.300",
             },
             "*::placeholder": {
-                color: "brand.200",
+                color: "brand.100",
             },
             "*, *::before, &::after": {
-                borderColor: "brand.200",
+                borderColor: "brand.100",
             },
         },
     },
     components: {
         Button,
+        Input,
     },
     colors: {
         brand: {

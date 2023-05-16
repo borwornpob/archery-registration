@@ -21,7 +21,7 @@ export default function Footer() {
     return (
         <Container
             as="footer"
-            position="fixed"
+            position="relative"
             bottom="0"
             role="contentinfo"
             maxW="100%"
