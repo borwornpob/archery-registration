@@ -160,7 +160,9 @@ export default function Dashboard() {
                     division: newAthlete.division,
                     class: newAthlete.class,
                     club: newAthlete.club,
+                    team: newAthlete.team,
                     team_name: newAthlete.team_name,
+                    payment_status: "unconfirmed",
                 },
             ]);
             if (error) {
@@ -216,7 +218,7 @@ export default function Dashboard() {
                 คน
             </Text>
             <Button onClick={onOpen} mt="1rem">
-                เพิ่มนักกีฬา
+                สมัครเข้าร่วมการแข่งขัน
             </Button>
             <FormControl id="search" mt="1rem">
                 <FormLabel>ค้นหานักกีฬา</FormLabel>
@@ -243,6 +245,7 @@ export default function Dashboard() {
                                 <Th color="brand.100">Class</Th>
                                 <Th color="brand.100">Club</Th>
                                 <Th color="brand.100">Team</Th>
+                                <Th color="brand.100">Payment status</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
@@ -270,22 +273,39 @@ export default function Dashboard() {
                                         {athlete.team_name}
                                     </Td>
                                     <Td color="brand.100">
-                                        <Button
-                                            variant="solid"
-                                            colorScheme="red"
-                                            onClick={() => {
-                                                handleDeleteAthlete(athlete.id);
-                                            }}
-                                        >
-                                            ลบ
-                                        </Button>
+                                        {athlete.payment_status}
                                     </Td>
+                                    {athlete.payment_status ===
+                                    "unconfirmed" ? (
+                                        <Td color="brand.100">
+                                            <Button
+                                                variant="solid"
+                                                colorScheme="red"
+                                                onClick={() => {
+                                                    handleDeleteAthlete(
+                                                        athlete.id
+                                                    );
+                                                }}
+                                            >
+                                                ลบ
+                                            </Button>
+                                        </Td>
+                                    ) : null}
                                 </Tr>
                             ))}
                         </Tbody>
                     </Table>
                 </TableContainer>
-                <Button onClick={handleLogout}>ออกจากระบบ</Button>
+                <Button
+                    onClick={() => {
+                        navigate("/payment");
+                    }}
+                >
+                    ชำระเงิน
+                </Button>
+                <Button onClick={handleLogout} variant="secondary">
+                    ออกจากระบบ
+                </Button>
             </VStack>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />

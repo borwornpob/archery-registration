@@ -5,6 +5,7 @@ import Dashboard from "./routes/Dashboard";
 import AthleteCheck from "./routes/AthleteCheck";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
+import Payment from "./routes/Payment";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { UserProvider } from "./helper/UserContext";
@@ -20,6 +21,7 @@ export default function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/" element={<Home />} />
+                    <Route path="/payment" element={<Payment />} />
                 </Routes>
                 <Footer />
             </Router>
