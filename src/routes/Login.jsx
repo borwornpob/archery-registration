@@ -41,7 +41,6 @@ export default function Login() {
             } else {
                 if (data[0].password === password) {
                     Cookies.set("user", data[0].id, { expires: 1 });
-                    console.log(`${Cookies.get("user")} logged in`);
                     setUser(nationalID);
                     navigate("/dashboard");
                 } else {

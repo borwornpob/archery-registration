@@ -88,7 +88,6 @@ export default function Dashboard() {
         } else {
             setAthletes(data);
             setSearchResults(data);
-            console.log(data);
         }
     };
 
@@ -97,6 +96,9 @@ export default function Dashboard() {
             return (
                 athlete.name_thai.includes(searchTerm) ||
                 athlete.name_english
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                athlete.team_name
                     .toLowerCase()
                     .includes(searchTerm.toLowerCase())
             );

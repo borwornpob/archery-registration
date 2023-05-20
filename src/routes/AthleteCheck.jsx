@@ -56,7 +56,8 @@ export default function AthleteCheck() {
                 athlete.name_thai.includes(search) ||
                 athlete.name_english
                     .toLowerCase()
-                    .includes(search.toLowerCase())
+                    .includes(search.toLowerCase()) ||
+                athlete.team_name.toLowerCase().includes(search.toLowerCase())
             );
         });
         setSearchResult(result);
