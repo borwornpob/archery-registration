@@ -56,6 +56,12 @@ export default function Dashboard() {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+    const type = {
+        Recurve: ["U10", "U12", "U15", "U18", "Open"],
+        Compound: ["U12", "U18", "Open"],
+        Barebow: ["U12", "U18", "Open"],
+    };
+
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const fetchPersonalData = async (id) => {
@@ -389,9 +395,11 @@ export default function Dashboard() {
                                         });
                                     }}
                                 >
-                                    <option value="Recurve">Recurve</option>
-                                    <option value="Compound">Compound</option>
-                                    <option value="Barebow">Barebow</option>
+                                    {Object.keys(type).map((key) => {
+                                        return (
+                                            <option value={key}>{key}</option>
+                                        );
+                                    })}
                                 </Select>
                             </FormControl>
                             <FormControl id="class" isRequired>
@@ -406,9 +414,11 @@ export default function Dashboard() {
                                         });
                                     }}
                                 >
-                                    <option value="Open">Open</option>
-                                    <option value="U18">Under 18</option>
-                                    <option value="U10">Under 10</option>
+                                    {type[newAthlete.division]?.map((item) => {
+                                        return (
+                                            <option value={item}>{item}</option>
+                                        );
+                                    })}
                                 </Select>
                             </FormControl>
                             <FormControl id="team" isRequired>
