@@ -53,6 +53,22 @@ export default function Dashboard() {
         team: "",
         team_name: "",
     });
+    const [updateAthlete, setUpdateAthlete] = useState({
+        id: "",
+        name_thai: "",
+        name_english: "",
+        surname_thai: "",
+        surname_english: "",
+        sex: "",
+        division: "",
+        class: "",
+        club: "",
+        team: "",
+        team_name: "",
+    });
+
+    const [typeModal, setTypeModal] = useState("add");
+
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
@@ -76,6 +92,37 @@ export default function Dashboard() {
         }
         fetchAthletes(data[0].club);
         setNewAthlete({ ...newAthlete, club: data[0].club });
+        setUpdateAthlete({ ...updateAthlete, club: data[0].club });
+    };
+
+    const updateAthleteData = async () => {
+        if (checkUpdateAthlete()) {
+            console.log(updateAthlete);
+            const { data, error } = await supabase
+                .from("athletes")
+                .update({
+                    name_thai: updateAthlete.name_thai,
+                    name_english: updateAthlete.name_english,
+                    surname_thai: updateAthlete.surname_thai,
+                    surname_english: updateAthlete.surname_english,
+                    sex: updateAthlete.sex,
+                    division: updateAthlete.division,
+                    class: updateAthlete.class,
+                    club: updateAthlete.club,
+                    team: updateAthlete.team,
+                    team_name: updateAthlete.team_name,
+                })
+                .eq("id", updateAthlete.id);
+            if (error) {
+                alert(error.message);
+            } else {
+                alert("อัพเดทข้อมูลนักกีฬาสำเร็จ");
+                onClose();
+                fetchAthletes(updateAthlete.club);
+            }
+        } else {
+            alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+        }
     };
 
     const fetchAthletes = async (club) => {
@@ -120,6 +167,15 @@ export default function Dashboard() {
         }
     }, []);
 
+    useEffect(() => {
+        if (updateAthlete.team === "false" || updateAthlete.team == "false") {
+            setUpdateAthlete({
+                ...updateAthlete,
+                team_name: "",
+            });
+        }
+    }, [updateAthlete.team]);
+
     const navigate = useNavigate();
 
     let { width } = useWindowDimensions();
@@ -128,6 +184,41 @@ export default function Dashboard() {
         Cookies.remove("user");
         setUser(null);
         navigate("/");
+    };
+
+    const checkUpdateAthlete = () => {
+        if (
+            updateAthlete.name_thai === "" ||
+            updateAthlete.name_english === "" ||
+            updateAthlete.surname_thai === "" ||
+            updateAthlete.surname_english === "" ||
+            updateAthlete.sex === "" ||
+            updateAthlete.division === "" ||
+            updateAthlete.class === "" ||
+            updateAthlete.club === "" ||
+            updateAthlete.team === ""
+        ) {
+            return false;
+        } else {
+            if (updateAthlete.team === "true" || updateAthlete.team == true) {
+                if (updateAthlete.team_name === "") {
+                    return false;
+                } else if (
+                    updateAthlete.team === "false" ||
+                    updateAthlete.team == false
+                ) {
+                    setUpdateAthlete({
+                        ...updateAthlete,
+                        team_name: "",
+                    });
+                    return true;
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        }
     };
 
     const checkNewAthlete = () => {
@@ -196,7 +287,7 @@ export default function Dashboard() {
             division: "",
             class: "",
             club: newAthlete.club,
-            team: null,
+            team: "",
             team_name: "",
         });
     };
@@ -214,6 +305,21 @@ export default function Dashboard() {
         }
     };
 
+    const handleUpdateAthlete = async (id) => {
+        const { data, error } = await supabase
+            .from("athletes")
+            .select("*")
+            .eq("id", id);
+        if (error) {
+            alert(error.message);
+        } else {
+            console.log(data);
+            setUpdateAthlete(data[0]);
+            setTypeModal("update");
+            onOpen();
+        }
+    };
+
     return (
         <Container maxW={width}>
             <Heading>Dashboard</Heading>
@@ -225,7 +331,13 @@ export default function Dashboard() {
                 มีนักกีฬาอยู่ในสังกัด {newAthlete.club} จำนวน {athletes.length}{" "}
                 คน
             </Text>
-            <Button onClick={onOpen} mt="1rem">
+            <Button
+                onClick={() => {
+                    setTypeModal("add");
+                    onOpen();
+                }}
+                mt="1rem"
+            >
                 สมัครเข้าร่วมการแข่งขัน
             </Button>
             <FormControl id="search" mt="1rem">
@@ -288,7 +400,21 @@ export default function Dashboard() {
                                         <Td color="brand.100">
                                             <Button
                                                 variant="solid"
+                                                colorScheme="green"
+                                                size="sm"
+                                                onClick={() => {
+                                                    handleUpdateAthlete(
+                                                        athlete.id
+                                                    );
+                                                }}
+                                            >
+                                                แก้ไข
+                                            </Button>
+                                            <Button
+                                                variant="solid"
                                                 colorScheme="red"
+                                                ml="1rem"
+                                                size="sm"
                                                 onClick={() => {
                                                     handleDeleteAthlete(
                                                         athlete.id
@@ -317,150 +443,323 @@ export default function Dashboard() {
             </VStack>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>เพิ่มนักกีฬา</ModalHeader>
-                    <ModalBody>
-                        <VStack spacing="1rem">
-                            <FormControl id="nameThai" isRequired>
-                                <FormLabel>ชื่อ</FormLabel>
-                                <Input
-                                    placeholder="ชื่อ"
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            name_thai: e.target.value,
-                                        });
-                                    }}
-                                />
-                            </FormControl>
-                            <FormControl id="surnameThai" isRequired>
-                                <FormLabel>นามสกุล</FormLabel>
-                                <Input
-                                    placeholder="นามสกุล"
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            surname_thai: e.target.value,
-                                        });
-                                    }}
-                                />
-                            </FormControl>
-                            <FormControl id="nameEng" isRequired>
-                                <FormLabel>ชื่อ (ภาษาอังกฤษ)</FormLabel>
-                                <Input
-                                    placeholder="ชื่อ (ภาษาอังกฤษ)"
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            name_english: e.target.value,
-                                        });
-                                    }}
-                                />
-                            </FormControl>
-                            <FormControl id="surnameEng" isRequired>
-                                <FormLabel>นามสกุล (ภาษาอังกฤษ)</FormLabel>
-                                <Input
-                                    placeholder="นามสกุล (ภาษาอังกฤษ)"
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            surname_english: e.target.value,
-                                        });
-                                    }}
-                                />
-                            </FormControl>
-                            <FormControl id="sex" isRequired>
-                                <FormLabel>เพศ</FormLabel>
-                                <Select
-                                    placeholder="กรุณาระบุเพศของท่าน"
-                                    value={newAthlete.sex}
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            sex: e.target.value,
-                                        });
-                                    }}
-                                >
-                                    <option value="male">ชาย</option>
-                                    <option value="female">หญิง</option>
-                                </Select>
-                            </FormControl>
-                            <FormControl id="division" isRequired>
-                                <FormLabel>Division</FormLabel>
-                                <Select
-                                    placeholder="กรุณาระบุ Division ของท่าน"
-                                    value={newAthlete.division}
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            division: e.target.value,
-                                        });
-                                    }}
-                                >
-                                    {Object.keys(type).map((key) => {
-                                        return (
-                                            <option value={key}>{key}</option>
-                                        );
-                                    })}
-                                </Select>
-                            </FormControl>
-                            <FormControl id="class" isRequired>
-                                <FormLabel>Class</FormLabel>
-                                <Select
-                                    placeholder="กรุณาระบุ Class ของท่าน"
-                                    value={newAthlete.class}
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            class: e.target.value,
-                                        });
-                                    }}
-                                >
-                                    {type[newAthlete.division]?.map((item) => {
-                                        return (
-                                            <option value={item}>{item}</option>
-                                        );
-                                    })}
-                                </Select>
-                            </FormControl>
-                            <FormControl id="team" isRequired>
-                                <FormLabel>Team</FormLabel>
-                                <Select
-                                    placeholder="ต้องการเข้าร่วมการแข่งขันในรูปแบบทีมหรือไม่"
-                                    value={newAthlete.team}
-                                    onChange={(e) => {
-                                        setNewAthlete({
-                                            ...newAthlete,
-                                            team: e.target.value,
-                                        });
-                                    }}
-                                >
-                                    <option value={true}>ต้องการ</option>
-                                    <option value={false}>ไม่ต้องการ</option>
-                                </Select>
-                            </FormControl>
-                            {newAthlete.team === "true" ? (
-                                <FormControl id="teamName" isRequired>
-                                    <FormLabel>ชื่อทีม</FormLabel>
+
+                {typeModal === "add" ? (
+                    <ModalContent>
+                        <ModalHeader>เพิ่มนักกีฬา</ModalHeader>
+                        <ModalBody>
+                            <VStack spacing="1rem">
+                                <FormControl id="nameThai" isRequired>
+                                    <FormLabel>ชื่อ</FormLabel>
                                     <Input
-                                        placeholder="ชื่อทีม"
+                                        placeholder="ชื่อ"
                                         onChange={(e) => {
                                             setNewAthlete({
                                                 ...newAthlete,
-                                                team_name: e.target.value,
+                                                name_thai: e.target.value,
                                             });
                                         }}
                                     />
                                 </FormControl>
-                            ) : null}
-
-                            <Button onClick={handleAddAthlete} w="sm">
-                                เพิ่มนักกีฬา
+                                <FormControl id="surnameThai" isRequired>
+                                    <FormLabel>นามสกุล</FormLabel>
+                                    <Input
+                                        placeholder="นามสกุล"
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                surname_thai: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl id="nameEng" isRequired>
+                                    <FormLabel>ชื่อ (ภาษาอังกฤษ)</FormLabel>
+                                    <Input
+                                        placeholder="ชื่อ (ภาษาอังกฤษ)"
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                name_english: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl id="surnameEng" isRequired>
+                                    <FormLabel>นามสกุล (ภาษาอังกฤษ)</FormLabel>
+                                    <Input
+                                        placeholder="นามสกุล (ภาษาอังกฤษ)"
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                surname_english: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl id="sex" isRequired>
+                                    <FormLabel>เพศ</FormLabel>
+                                    <Select
+                                        placeholder="กรุณาระบุเพศของท่าน"
+                                        value={newAthlete.sex}
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                sex: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        <option value="male">ชาย</option>
+                                        <option value="female">หญิง</option>
+                                    </Select>
+                                </FormControl>
+                                <FormControl id="division" isRequired>
+                                    <FormLabel>Division</FormLabel>
+                                    <Select
+                                        placeholder="กรุณาระบุ Division ของท่าน"
+                                        value={newAthlete.division}
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                division: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        {Object.keys(type).map((key) => {
+                                            return (
+                                                <option value={key}>
+                                                    {key}
+                                                </option>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                <FormControl id="class" isRequired>
+                                    <FormLabel>Class</FormLabel>
+                                    <Select
+                                        placeholder="กรุณาระบุ Class ของท่าน"
+                                        value={newAthlete.class}
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                class: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        {type[newAthlete.division]?.map(
+                                            (item) => {
+                                                return (
+                                                    <option value={item}>
+                                                        {item}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </Select>
+                                </FormControl>
+                                <FormControl id="team" isRequired>
+                                    <FormLabel>Team</FormLabel>
+                                    <Select
+                                        placeholder="ต้องการเข้าร่วมการแข่งขันในรูปแบบทีมหรือไม่"
+                                        value={newAthlete.team}
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                team: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        <option value={true}>ต้องการ</option>
+                                        <option value={false}>
+                                            ไม่ต้องการ
+                                        </option>
+                                    </Select>
+                                </FormControl>
+                                {newAthlete.team === "true" ? (
+                                    <FormControl id="teamName" isRequired>
+                                        <FormLabel>ชื่อทีม</FormLabel>
+                                        <Input
+                                            placeholder="ชื่อทีม"
+                                            onChange={(e) => {
+                                                setNewAthlete({
+                                                    ...newAthlete,
+                                                    team_name: e.target.value,
+                                                });
+                                            }}
+                                        />
+                                    </FormControl>
+                                ) : null}
+                                <Button onClick={handleAddAthlete} w="sm">
+                                    เพิ่มนักกีฬา
+                                </Button>
+                            </VStack>
+                        </ModalBody>
+                    </ModalContent>
+                ) : (
+                    <ModalContent>
+                        <ModalHeader>แก้ไขนักกีฬา</ModalHeader>
+                        <ModalBody>
+                            <VStack spacing="1rem">
+                                <FormControl id="nameThai" isRequired>
+                                    <FormLabel>ชื่อ</FormLabel>
+                                    <Input
+                                        placeholder="ชื่อ"
+                                        value={updateAthlete.name_thai}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                name_thai: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl id="surnameThai" isRequired>
+                                    <FormLabel>นามสกุล</FormLabel>
+                                    <Input
+                                        placeholder="นามสกุล"
+                                        value={updateAthlete.surname_thai}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                surname_thai: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl id="nameEng" isRequired>
+                                    <FormLabel>ชื่อ (ภาษาอังกฤษ)</FormLabel>
+                                    <Input
+                                        placeholder="ชื่อ (ภาษาอังกฤษ)"
+                                        value={updateAthlete.name_english}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                name_english: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl id="surnameEng" isRequired>
+                                    <FormLabel>นามสกุล (ภาษาอังกฤษ)</FormLabel>
+                                    <Input
+                                        placeholder="นามสกุล (ภาษาอังกฤษ)"
+                                        value={updateAthlete.surname_english}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                surname_english: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl id="sex" isRequired>
+                                    <FormLabel>เพศ</FormLabel>
+                                    <Select
+                                        placeholder="กรุณาระบุเพศของท่าน"
+                                        value={updateAthlete.sex}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                sex: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        <option value="male">ชาย</option>
+                                        <option value="female">หญิง</option>
+                                    </Select>
+                                </FormControl>
+                                <FormControl id="division" isRequired>
+                                    <FormLabel>Division</FormLabel>
+                                    <Select
+                                        placeholder="กรุณาระบุ Division ของท่าน"
+                                        value={updateAthlete.division}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                division: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        {Object.keys(type).map((key) => {
+                                            return (
+                                                <option value={key}>
+                                                    {key}
+                                                </option>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                <FormControl id="class" isRequired>
+                                    <FormLabel>Class</FormLabel>
+                                    <Select
+                                        placeholder="กรุณาระบุ Class ของท่าน"
+                                        value={updateAthlete.class}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                class: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        {type[updateAthlete.division]?.map(
+                                            (item) => {
+                                                return (
+                                                    <option value={item}>
+                                                        {item}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </Select>
+                                </FormControl>
+                                <FormControl id="team" isRequired>
+                                    <FormLabel>Team</FormLabel>
+                                    <Select
+                                        placeholder="ต้องการเข้าร่วมการแข่งขันในรูปแบบทีมหรือไม่"
+                                        value={updateAthlete.team}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                team: e.target.value,
+                                            });
+                                        }}
+                                    >
+                                        <option value={true}>ต้องการ</option>
+                                        <option value={false}>
+                                            ไม่ต้องการ
+                                        </option>
+                                    </Select>
+                                </FormControl>
+                                {updateAthlete.team === "true" ||
+                                updateAthlete.team == true ? (
+                                    <FormControl id="teamName" isRequired>
+                                        <FormLabel>ชื่อทีม</FormLabel>
+                                        <Input
+                                            placeholder="ชื่อทีม"
+                                            value={updateAthlete.team_name}
+                                            onChange={(e) => {
+                                                setUpdateAthlete({
+                                                    ...updateAthlete,
+                                                    team_name: e.target.value,
+                                                });
+                                            }}
+                                        />
+                                    </FormControl>
+                                ) : null}
+                            </VStack>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button
+                                variant="secondary"
+                                mr={3}
+                                onClick={onClose}
+                            >
+                                ยกเลิก
                             </Button>
-                        </VStack>
-                    </ModalBody>
-                    <ModalCloseButton />
-                </ModalContent>
+                            <Button onClick={updateAthleteData}>ยืนยัน</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                )}
             </Modal>
         </Container>
     );
