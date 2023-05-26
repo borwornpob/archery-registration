@@ -29,7 +29,7 @@ export default function Footer() {
         >
             <Stack>
                 <Stack justify="space-between" direction="row" align="center">
-                    <Text>Borwornpob.</Text>
+                    <Text>Young Blood Archery</Text>
                     <ButtonGroup variant="ghost">
                         <IconButton
                             as="a"
@@ -60,8 +60,8 @@ export default function Footer() {
                     </ButtonGroup>
                 </Stack>
                 <Text fontSize="sm" color="subtle">
-                    &copy; {new Date().getFullYear()} Borwornpob
-                    Thumrongchotikhun. All rights reserved.
+                    &copy; {new Date().getFullYear()} Young Blood Archery. All
+                    rights reserved.
                 </Text>
             </Stack>
         </Container>

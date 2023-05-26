@@ -9,22 +9,32 @@ import Payment from "./routes/Payment";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { UserProvider } from "./helper/UserContext";
+import { Box, Flex, VStack } from "@chakra-ui/react";
 
 export default function App() {
     return (
         <UserProvider>
-            <Router>
-                <Header />
-                <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/athletecheck" element={<AthleteCheck />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/" element={<Home />} />
-                    <Route path="/payment" element={<Payment />} />
-                </Routes>
-                <Footer />
-            </Router>
+            <Flex direction="column" minH="100vh">
+                <Box flex="1">
+                    <Router>
+                        <Header />
+                        <Routes>
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route
+                                path="/athletecheck"
+                                element={<AthleteCheck />}
+                            />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/" element={<Home />} />
+                            <Route path="/payment" element={<Payment />} />
+                        </Routes>
+                    </Router>
+                </Box>
+                <Box>
+                    <Footer />
+                </Box>
+            </Flex>
         </UserProvider>
     );
 }

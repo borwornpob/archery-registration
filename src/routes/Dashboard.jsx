@@ -97,7 +97,6 @@ export default function Dashboard() {
 
     const updateAthleteData = async () => {
         if (checkUpdateAthlete()) {
-            console.log(updateAthlete);
             const { data, error } = await supabase
                 .from("athletes")
                 .update({
@@ -313,7 +312,6 @@ export default function Dashboard() {
         if (error) {
             alert(error.message);
         } else {
-            console.log(data);
             setUpdateAthlete(data[0]);
             setTypeModal("update");
             onOpen();

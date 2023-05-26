@@ -21,6 +21,9 @@ export default function Home() {
     return (
         <Container>
             <VStack>
+                <Heading w={width}>
+                    สมัครเข้าร่วมการแข่งขัน "นครปฐม เกมส์" ได้ที่นี่
+                </Heading>
                 <Button
                     size="lg"
                     variant="primary"
