@@ -30,6 +30,7 @@ export default function Payment() {
     const [club, setClub] = useState("");
     const [amount, setAmount] = useState("");
     const [athletes, setAthletes] = useState([]);
+    const [id, setId] = useState("");
 
     let { width } = useWindowDimensions();
 
@@ -47,6 +48,7 @@ export default function Payment() {
             .from("athletes")
             .select("*")
             .eq("club", club)
+            .eq("created_by", id)
             .eq("payment_status", "unconfirmed");
         if (error) {
             alert(error.message);
@@ -69,6 +71,7 @@ export default function Payment() {
             alert(error.message);
         }
         setClub(data[0].club);
+        setId(data[0].id);
         calculateAmount(data[0].club);
     };
 
@@ -80,6 +83,7 @@ export default function Payment() {
             .from("athletes")
             .update({ payment_status: "waiting to confirm" })
             .eq("club", club)
+            .eq("created_by", id)
             .eq("payment_status", "unconfirmed");
 
         if (error) {
