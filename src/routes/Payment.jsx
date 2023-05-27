@@ -13,6 +13,13 @@ import {
     VStack,
     Image,
 } from "@chakra-ui/react";
+import {
+    FaGithub,
+    FaLinkedin,
+    FaTwitter,
+    FaInstagram,
+    FaLine,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../helper/supabase";
 import useWindowDimensions from "../helper/dimensions";
@@ -108,8 +115,7 @@ export default function Payment() {
             <Image src={payQr} fit="scale-down" />
             <Text>
                 เมื่อทำการชำระเงินผ่าน qrcode เรียบร้อยแล้ว ให้ส่งสลิปไปที่
-                lineID: firstzawork พร้อมแจ้งชื่อสังกัด
-                เพื่อยืนยันการชำระเงินครับ
+                lineID: @562rlwol พร้อมแจ้งชื่อสังกัด เพื่อยืนยันการชำระเงินครับ
             </Text>
             {athletes.length > 0 ? (
                 <Button variant="primary" onClick={handlePayment}>
