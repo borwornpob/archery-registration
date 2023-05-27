@@ -40,6 +40,7 @@ import ChakraReactCreatableSelect from "../components/Select";
 
 export default function Dashboard() {
     const { user, setUser } = useContext(UserContext);
+    const [id, setId] = useState("");
     const [personalData, setPersonalData] = useState({});
     const [athletes, setAthletes] = useState([]);
     const [availiableTeamNames, setAvailiableTeamNames] = useState([]);
@@ -58,6 +59,7 @@ export default function Dashboard() {
         team: "",
         team_name: "",
         team_code: "",
+        created_by: "",
     });
     const [updateAthlete, setUpdateAthlete] = useState({
         id: "",
@@ -73,6 +75,7 @@ export default function Dashboard() {
         team: "",
         team_name: "",
         team_code: "",
+        created_by: "",
     });
 
     const [typeModal, setTypeModal] = useState("add");
@@ -103,12 +106,15 @@ export default function Dashboard() {
             ...newAthlete,
             club: data[0].club,
             club_code: data[0].club_code,
+            created_by: data[0].id,
         });
         setUpdateAthlete({
             ...updateAthlete,
             club: data[0].club,
             club_code: data[0].club_code,
+            created_by: data[0].id,
         });
+        setId(data[0].id);
     };
 
     const updateAthleteData = async () => {
@@ -128,6 +134,7 @@ export default function Dashboard() {
                     team: updateAthlete.team,
                     team_name: updateAthlete.team_name,
                     team_code: updateAthlete.team_code,
+                    created_by: updateAthlete.created_by,
                 })
                 .eq("id", updateAthlete.id);
             addTeamIfNotExistForUpdateAthlete();
@@ -303,6 +310,7 @@ export default function Dashboard() {
                     team_name: newAthlete.team_name,
                     team_code: newAthlete.team_code,
                     payment_status: "unconfirmed",
+                    created_by: newAthlete.created_by,
                 },
             ]);
             addTeamIfNotExist();
@@ -334,6 +342,8 @@ export default function Dashboard() {
             team: "",
             team_name: "",
             team_code: "",
+            club_code: newAthlete.club_code,
+            created_by: newAthlete.created_by,
         });
     };
 
@@ -511,8 +521,8 @@ export default function Dashboard() {
                                     <Td color="brand.100">
                                         {athlete.payment_status}
                                     </Td>
-                                    {athlete.payment_status ===
-                                    "unconfirmed" ? (
+                                    {athlete.payment_status === "unconfirmed" &&
+                                    athlete.created_by == id ? (
                                         <Td color="brand.100">
                                             <Button
                                                 variant="solid"
@@ -760,7 +770,7 @@ export default function Dashboard() {
                                     </>
                                 ) : null}
                                 <Button onClick={handleAddAthlete} w="sm">
-                                    เพิ่มนักกีฬา
+                                    ยืนยันการสมัคร
                                 </Button>
                             </VStack>
                         </ModalBody>

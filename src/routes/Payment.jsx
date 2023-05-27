@@ -54,11 +54,7 @@ export default function Payment() {
             setAthletes(data);
         }
         for (let i = 0; i < data.length; i++) {
-            if (data[i].team) {
-                allAmount += fee * 2;
-            } else {
-                allAmount += fee;
-            }
+            allAmount += fee;
         }
 
         setAmount(allAmount);
