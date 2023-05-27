@@ -54,6 +54,7 @@ export default function Dashboard() {
         division: "",
         class: "",
         club: "",
+        club_code: "",
         team: "",
         team_name: "",
         team_code: "",
@@ -68,6 +69,7 @@ export default function Dashboard() {
         division: "",
         class: "",
         club: "",
+        club_code: "",
         team: "",
         team_name: "",
         team_code: "",
@@ -97,8 +99,16 @@ export default function Dashboard() {
             setPersonalData(data[0]);
         }
         fetchAthletes(data[0].club);
-        setNewAthlete({ ...newAthlete, club: data[0].club });
-        setUpdateAthlete({ ...updateAthlete, club: data[0].club });
+        setNewAthlete({
+            ...newAthlete,
+            club: data[0].club,
+            club_code: data[0].club_code,
+        });
+        setUpdateAthlete({
+            ...updateAthlete,
+            club: data[0].club,
+            club_code: data[0].club_code,
+        });
     };
 
     const updateAthleteData = async () => {
@@ -114,6 +124,7 @@ export default function Dashboard() {
                     division: updateAthlete.division,
                     class: updateAthlete.class,
                     club: updateAthlete.club,
+                    club_code: updateAthlete.club_code,
                     team: updateAthlete.team,
                     team_name: updateAthlete.team_name,
                     team_code: updateAthlete.team_code,
@@ -287,6 +298,7 @@ export default function Dashboard() {
                     division: newAthlete.division,
                     class: newAthlete.class,
                     club: newAthlete.club,
+                    club_code: newAthlete.club_code,
                     team: newAthlete.team,
                     team_name: newAthlete.team_name,
                     team_code: newAthlete.team_code,
@@ -428,8 +440,8 @@ export default function Dashboard() {
                 {personalData.surname_thai}
             </Text>
             <Text>
-                มีนักกีฬาอยู่ในสังกัด {newAthlete.club} จำนวน {athletes.length}{" "}
-                คน
+                มีนักกีฬาอยู่ในสังกัด {newAthlete.club} ({newAthlete.club_code})
+                จำนวน {athletes.length} คน
             </Text>
             <Button
                 onClick={() => {
