@@ -36,11 +36,15 @@ import { supabase } from "../helper/supabase";
 import useWindowDimensions from "../helper/dimensions";
 import { UserContext } from "../helper/UserContext";
 import Cookies from "js-cookie";
+import ChakraReactCreatableSelect from "../components/Select";
 
 export default function Dashboard() {
     const { user, setUser } = useContext(UserContext);
     const [personalData, setPersonalData] = useState({});
     const [athletes, setAthletes] = useState([]);
+    const [availiableTeamNames, setAvailiableTeamNames] = useState([]);
+    const [availiableTeamCodes, setAvailiableTeamCodes] = useState([]);
+    const [availiableTeamData, setAvailiableTeamData] = useState([{}]);
     const [newAthlete, setNewAthlete] = useState({
         name_thai: "",
         name_english: "",
@@ -52,6 +56,7 @@ export default function Dashboard() {
         club: "",
         team: "",
         team_name: "",
+        team_code: "",
     });
     const [updateAthlete, setUpdateAthlete] = useState({
         id: "",
@@ -65,6 +70,7 @@ export default function Dashboard() {
         club: "",
         team: "",
         team_name: "",
+        team_code: "",
     });
 
     const [typeModal, setTypeModal] = useState("add");
@@ -110,14 +116,17 @@ export default function Dashboard() {
                     club: updateAthlete.club,
                     team: updateAthlete.team,
                     team_name: updateAthlete.team_name,
+                    team_code: updateAthlete.team_code,
                 })
                 .eq("id", updateAthlete.id);
+            addTeamIfNotExistForUpdateAthlete();
             if (error) {
                 alert(error.message);
             } else {
                 alert("อัพเดทข้อมูลนักกีฬาสำเร็จ");
                 onClose();
                 fetchAthletes(updateAthlete.club);
+                fetchAvailiableTeams();
             }
         } else {
             alert("กรุณากรอกข้อมูลให้ครบถ้วน");
@@ -146,6 +155,9 @@ export default function Dashboard() {
                     .includes(searchTerm.toLowerCase()) ||
                 athlete.team_name
                     .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                athlete.team_code
+                    .toLowerCase()
                     .includes(searchTerm.toLowerCase())
             );
         });
@@ -163,6 +175,7 @@ export default function Dashboard() {
         } else {
             setUser(cookie);
             fetchPersonalData(cookie);
+            fetchAvailiableTeams();
         }
     }, []);
 
@@ -171,6 +184,7 @@ export default function Dashboard() {
             setUpdateAthlete({
                 ...updateAthlete,
                 team_name: "",
+                team_code: "",
             });
         }
     }, [updateAthlete.team]);
@@ -200,7 +214,10 @@ export default function Dashboard() {
             return false;
         } else {
             if (updateAthlete.team === "true" || updateAthlete.team == true) {
-                if (updateAthlete.team_name === "") {
+                if (
+                    updateAthlete.team_name === "" ||
+                    updateAthlete.team_code === ""
+                ) {
                     return false;
                 } else if (
                     updateAthlete.team === "false" ||
@@ -209,8 +226,12 @@ export default function Dashboard() {
                     setUpdateAthlete({
                         ...updateAthlete,
                         team_name: "",
+                        team_code: "",
                     });
                     return true;
+                } else if (updateAthlete.team_code.length > 6) {
+                    alert("รหัสทีมต้องมีความยาวไม่เกิน 6 ตัวอักษร");
+                    return false;
                 } else {
                     return true;
                 }
@@ -235,10 +256,18 @@ export default function Dashboard() {
             return false;
         } else {
             if (newAthlete.team === "true") {
-                if (newAthlete.team_name === "") {
+                if (
+                    newAthlete.team_name === "" ||
+                    newAthlete.team_code === ""
+                ) {
                     return false;
                 } else {
-                    return true;
+                    if (newAthlete.team_code.length > 6) {
+                        alert("รหัสทีมต้องมีความยาวไม่เกิน 6 ตัวอักษร");
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             } else {
                 return true;
@@ -260,9 +289,11 @@ export default function Dashboard() {
                     club: newAthlete.club,
                     team: newAthlete.team,
                     team_name: newAthlete.team_name,
+                    team_code: newAthlete.team_code,
                     payment_status: "unconfirmed",
                 },
             ]);
+            addTeamIfNotExist();
             if (error) {
                 alert(error.message);
             } else {
@@ -270,9 +301,11 @@ export default function Dashboard() {
                 onClose();
                 clearNewAthlete();
                 fetchAthletes(newAthlete.club);
+                fetchAvailiableTeams();
             }
         } else {
             alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+            console.log(newAthlete);
         }
     };
 
@@ -288,6 +321,7 @@ export default function Dashboard() {
             club: newAthlete.club,
             team: "",
             team_name: "",
+            team_code: "",
         });
     };
 
@@ -315,6 +349,74 @@ export default function Dashboard() {
             setUpdateAthlete(data[0]);
             setTypeModal("update");
             onOpen();
+        }
+    };
+
+    const addTeamIfNotExist = async () => {
+        const { data, error } = await supabase
+            .from("teams")
+            .select("*")
+            .eq("team_name", newAthlete.team_name);
+        if (error) {
+            alert(error.message);
+        } else {
+            if (data.length === 0) {
+                const { data, error } = await supabase.from("teams").insert([
+                    {
+                        team_name: newAthlete.team_name,
+                        team_code: newAthlete.team_code,
+                        first_creator: newAthlete.name_english,
+                    },
+                ]);
+                if (error) {
+                    alert(error.message);
+                } else {
+                    alert("เพิ่มทีมสำเร็จ");
+                }
+            }
+        }
+    };
+
+    const addTeamIfNotExistForUpdateAthlete = async () => {
+        const { data, error } = await supabase
+            .from("teams")
+            .select("*")
+            .eq("team_name", updateAthlete.team_name);
+        if (error) {
+            alert(error.message);
+        } else {
+            if (data.length === 0) {
+                const { data, error } = await supabase.from("teams").insert([
+                    {
+                        team_name: updateAthlete.team_name,
+                        team_code: updateAthlete.team_code,
+
+                        first_creator: updateAthlete.name_english,
+                    },
+                ]);
+                if (error) {
+                    alert(error.message);
+                } else {
+                    alert("เพิ่มทีมสำเร็จ");
+                }
+            }
+        }
+    };
+
+    const fetchAvailiableTeams = async () => {
+        const { data, error } = await supabase.from("teams").select("*");
+        if (error) {
+            alert(error.message);
+        } else {
+            const optionsTeamName = data.map((item) => {
+                return { value: item.team_name, label: item.team_name };
+            });
+            const optionsTeamCode = data.map((item) => {
+                return { value: item.team_code, label: item.team_code };
+            });
+            setAvailiableTeamNames(optionsTeamName);
+            setAvailiableTeamCodes(optionsTeamCode);
+            setAvailiableTeamData(data);
         }
     };
 
@@ -363,6 +465,7 @@ export default function Dashboard() {
                                 <Th color="brand.100">Class</Th>
                                 <Th color="brand.100">Club</Th>
                                 <Th color="brand.100">Team</Th>
+                                <Th color="brand.100">Team Code</Th>
                                 <Th color="brand.100">Payment status</Th>
                             </Tr>
                         </Thead>
@@ -389,6 +492,9 @@ export default function Dashboard() {
                                     <Td color="brand.100">{athlete.club}</Td>
                                     <Td color="brand.100">
                                         {athlete.team_name}
+                                    </Td>
+                                    <Td color="brand.100">
+                                        {athlete.team_code}
                                     </Td>
                                     <Td color="brand.100">
                                         {athlete.payment_status}
@@ -574,18 +680,72 @@ export default function Dashboard() {
                                     </Select>
                                 </FormControl>
                                 {newAthlete.team === "true" ? (
-                                    <FormControl id="teamName" isRequired>
-                                        <FormLabel>ชื่อทีม</FormLabel>
-                                        <Input
-                                            placeholder="ชื่อทีม"
-                                            onChange={(e) => {
-                                                setNewAthlete({
-                                                    ...newAthlete,
-                                                    team_name: e.target.value,
-                                                });
-                                            }}
-                                        />
-                                    </FormControl>
+                                    <>
+                                        <FormControl id="teamName" isRequired>
+                                            <FormLabel>ชื่อทีม</FormLabel>
+                                            <ChakraReactCreatableSelect
+                                                options={availiableTeamNames}
+                                                onChange={(e) => {
+                                                    console.log(e);
+                                                    setNewAthlete({
+                                                        ...newAthlete,
+                                                        team_name: e.value,
+                                                    });
+                                                    let teamCode =
+                                                        availiableTeamData[
+                                                            availiableTeamNames.findIndex(
+                                                                (item) =>
+                                                                    item.value ===
+                                                                    e.value
+                                                            )
+                                                        ]?.team_code;
+                                                    if (
+                                                        teamCode === undefined
+                                                    ) {
+                                                        setNewAthlete({
+                                                            ...newAthlete,
+                                                            team_code: "",
+                                                            team_name: e.value,
+                                                        });
+                                                    } else {
+                                                        setNewAthlete({
+                                                            ...newAthlete,
+                                                            team_code: teamCode,
+                                                            team_name: e.value,
+                                                        });
+                                                    }
+                                                }}
+                                                placeholder="กรุณาสร้างทีมใหม่หรือเลือกทีมที่มีอยู่แล้ว"
+                                            />
+                                        </FormControl>
+                                        <FormControl id="teamCode" isRequired>
+                                            <FormLabel>รหัสทีม</FormLabel>
+                                            {newAthlete.team_code == "" ? (
+                                                <ChakraReactCreatableSelect
+                                                    onChange={(e) => {
+                                                        setNewAthlete({
+                                                            ...newAthlete,
+                                                            team_code: e.value,
+                                                        });
+                                                    }}
+                                                    placeholder="กรุณาสร้างรหัสทีมใหม่"
+                                                />
+                                            ) : (
+                                                <Input
+                                                    placeholder="รหัสทีม"
+                                                    value={newAthlete.team_code}
+                                                    onChange={(e) => {
+                                                        setNewAthlete({
+                                                            ...newAthlete,
+                                                            team_code:
+                                                                e.target.value,
+                                                        });
+                                                    }}
+                                                    readOnly
+                                                />
+                                            )}
+                                        </FormControl>
+                                    </>
                                 ) : null}
                                 <Button onClick={handleAddAthlete} w="sm">
                                     เพิ่มนักกีฬา
@@ -730,19 +890,81 @@ export default function Dashboard() {
                                 </FormControl>
                                 {updateAthlete.team === "true" ||
                                 updateAthlete.team == true ? (
-                                    <FormControl id="teamName" isRequired>
-                                        <FormLabel>ชื่อทีม</FormLabel>
-                                        <Input
-                                            placeholder="ชื่อทีม"
-                                            value={updateAthlete.team_name}
-                                            onChange={(e) => {
-                                                setUpdateAthlete({
-                                                    ...updateAthlete,
-                                                    team_name: e.target.value,
-                                                });
-                                            }}
-                                        />
-                                    </FormControl>
+                                    <>
+                                        <FormControl id="teamName" isRequired>
+                                            <FormLabel>ชื่อทีม</FormLabel>
+                                            <ChakraReactCreatableSelect
+                                                options={availiableTeamNames}
+                                                onChange={(e) => {
+                                                    console.log(e);
+                                                    setUpdateAthlete({
+                                                        ...updateAthlete,
+                                                        team_name: e.value,
+                                                    });
+                                                    let teamCode =
+                                                        availiableTeamData[
+                                                            availiableTeamNames.findIndex(
+                                                                (item) =>
+                                                                    item.value ===
+                                                                    e.value
+                                                            )
+                                                        ]?.team_code;
+                                                    if (
+                                                        teamCode === undefined
+                                                    ) {
+                                                        setUpdateAthlete({
+                                                            ...updateAthlete,
+                                                            team_code: "",
+                                                            team_name: e.value,
+                                                        });
+                                                    } else {
+                                                        setUpdateAthlete({
+                                                            ...updateAthlete,
+                                                            team_code: teamCode,
+                                                            team_name: e.value,
+                                                        });
+                                                    }
+                                                }}
+                                                defaultValue={{
+                                                    value: updateAthlete.team_name,
+                                                    label: updateAthlete.team_name,
+                                                }}
+                                            />
+                                        </FormControl>
+                                        <FormControl id="teamCode" isRequired>
+                                            <FormLabel>รหัสทีม</FormLabel>
+                                            {updateAthlete.team_code == "" ? (
+                                                <ChakraReactCreatableSelect
+                                                    onChange={(e) => {
+                                                        setUpdateAthlete({
+                                                            ...updateAthlete,
+                                                            team_code: e.value,
+                                                        });
+                                                    }}
+                                                    placeholder="กรุณาสร้างรหัสทีมใหม่"
+                                                    defaultValue={{
+                                                        value: updateAthlete.team_code,
+                                                        label: updateAthlete.team_code,
+                                                    }}
+                                                />
+                                            ) : (
+                                                <Input
+                                                    placeholder="รหัสทีม"
+                                                    value={
+                                                        updateAthlete.team_code
+                                                    }
+                                                    onChange={(e) => {
+                                                        setUpdateAthlete({
+                                                            ...updateAthlete,
+                                                            team_code:
+                                                                e.target.value,
+                                                        });
+                                                    }}
+                                                    readOnly
+                                                />
+                                            )}
+                                        </FormControl>
+                                    </>
                                 ) : null}
                             </VStack>
                         </ModalBody>

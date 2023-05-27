@@ -14,6 +14,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../helper/supabase";
 import useWindowDimensions from "../helper/dimensions";
+import CreatableSelect from "react-select/creatable";
+import ChakraReactCreatableSelect from "../components/Select";
 
 export default function Register() {
     const [nameThai, setNameThai] = useState("");
@@ -21,9 +23,13 @@ export default function Register() {
     const [surnameThai, setSurnameThai] = useState("");
     const [surnameEng, setSurnameEng] = useState("");
     const [club, setClub] = useState("");
+    const [clubCode, setClubCode] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [nationalID, setNationalID] = useState("");
     const [password, setPassword] = useState("");
+    const [clubs, setClubs] = useState([]);
+    const [clubsCode, setClubsCode] = useState([]);
+    const [clubData, setClubData] = useState({});
 
     let { width } = useWindowDimensions();
 
@@ -42,6 +48,7 @@ export default function Register() {
                         phonenumber: phoneNumber,
                         id: nationalID,
                         password: password,
+                        club_code: clubCode,
                     },
                 ]);
                 if (error) {
@@ -57,6 +64,29 @@ export default function Register() {
             alert("กรุณากรอกข้อมูลให้ครบ");
         }
     };
+
+    const asyncFetchClubs = async () => {
+        const { data, error } = await supabase.from("clubs").select("*");
+        if (error) {
+            alert(error.message);
+        } else {
+            const optionClubName = data.map((club) => {
+                return { value: club.club_name, label: club.club_name };
+            });
+            const optionClubCode = data.map((club) => {
+                return { value: club.club_code, label: club.club_code };
+            });
+            setClubs(optionClubName);
+            setClubsCode(optionClubCode);
+            setClubData(data);
+            console.log(optionClubName);
+            console.log(optionClubCode);
+        }
+    };
+
+    useEffect(() => {
+        asyncFetchClubs();
+    }, []);
 
     const checkIfUserExists = async () => {
         const { data, error } = await supabase
@@ -74,6 +104,15 @@ export default function Register() {
         }
     };
 
+    const checkThaiNationalID = (nationalID) => {
+        const regexID =
+            /(\d{13})|(\d{1}\s\d{4}\s\d{5}\s\d{2}\s\d{1})|(\d{5}\s\d{5}\s\d{3})|(\d{5}\s\d{5}\s\d{2}\s\d{1})|(\d{1}\-?\d{4}\-?\d{5}\-?\d{2}\-?\d{1})/g;
+        if (regexID.test(nationalID)) {
+            return true;
+        }
+        return false;
+    };
+
     const checkRegisterData = () => {
         if (
             nameThai === "" ||
@@ -82,8 +121,9 @@ export default function Register() {
             surnameEng === "" ||
             club === "" ||
             phoneNumber === "" ||
-            nationalID === "" ||
-            password === ""
+            checkThaiNationalID(nationalID) ||
+            password === "" ||
+            (clubCode === "" && clubCode.length > 7)
         ) {
             return false;
         } else {
@@ -129,12 +169,46 @@ export default function Register() {
                 </FormControl>
                 <FormControl id="club" isRequired>
                     <FormLabel>ชมรม</FormLabel>
-                    <Input
-                        placeholder="ชมรม"
-                        value={club}
-                        onChange={(e) => setClub(e.target.value)}
+                    <ChakraReactCreatableSelect
+                        options={clubs}
+                        onChange={(e) => {
+                            setClub(e.value);
+                            if (
+                                clubData.find((c) => c.club_name === e.value)
+                                    ?.club_code
+                            ) {
+                                setClubCode(
+                                    clubData.find(
+                                        (c) => c.club_name === e.value
+                                    )?.club_code
+                                );
+                            } else {
+                                setClubCode("");
+                            }
+                            console.log(clubCode);
+                        }}
                     />
                 </FormControl>
+                {clubCode != "" &&
+                clubData.find((c) => c.club_name === club)?.club_code ? (
+                    <FormControl id="clubCode" isRequired>
+                        <FormLabel>รหัสชมรม</FormLabel>
+                        <Input
+                            placeholder="รหัสชมรม"
+                            value={clubCode}
+                            readOnly
+                        />
+                    </FormControl>
+                ) : (
+                    <FormControl id="clubCode" isRequired>
+                        <FormLabel>รหัสชมรม</FormLabel>
+                        <Input
+                            placeholder="รหัสชมรม"
+                            value={clubCode}
+                            onChange={(e) => setClubCode(e.target.value)}
+                        />
+                    </FormControl>
+                )}
                 <FormControl id="phoneNumber" isRequired>
                     <FormLabel>เบอร์โทรศัพท์</FormLabel>
                     <Input
