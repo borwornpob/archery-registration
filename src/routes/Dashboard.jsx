@@ -325,7 +325,6 @@ export default function Dashboard() {
             }
         } else {
             alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-            console.log(newAthlete);
         }
     };
 
@@ -708,7 +707,6 @@ export default function Dashboard() {
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
                                                 onChange={(e) => {
-                                                    console.log(e);
                                                     setNewAthlete({
                                                         ...newAthlete,
                                                         team_name: e.value,
@@ -923,7 +921,6 @@ export default function Dashboard() {
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
                                                 onChange={(e) => {
-                                                    console.log(e);
                                                     setUpdateAthlete({
                                                         ...updateAthlete,
                                                         team_name: e.value,

@@ -79,8 +79,6 @@ export default function Register() {
             setClubs(optionClubName);
             setClubsCode(optionClubCode);
             setClubData(data);
-            console.log(optionClubName);
-            console.log(optionClubCode);
         }
     };
 
@@ -185,7 +183,6 @@ export default function Register() {
                             } else {
                                 setClubCode("");
                             }
-                            console.log(clubCode);
                         }}
                     />
                 </FormControl>
