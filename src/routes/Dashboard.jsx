@@ -703,7 +703,7 @@ export default function Dashboard() {
                                 </FormControl>
                                 {newAthlete.team === "true" ? (
                                     <>
-                                        <FormControl id="teamName" isRequired>
+                                        <FormControl id="teamName">
                                             <FormLabel>ชื่อทีม</FormLabel>
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
@@ -740,7 +740,7 @@ export default function Dashboard() {
                                                 placeholder="กรุณาสร้างทีมใหม่หรือเลือกทีมที่มีอยู่แล้ว"
                                             />
                                         </FormControl>
-                                        <FormControl id="teamCode" isRequired>
+                                        <FormControl id="teamCode">
                                             <FormLabel>รหัสทีม</FormLabel>
                                             {newAthlete.team_code == "" ? (
                                                 <ChakraReactCreatableSelect
@@ -769,6 +769,11 @@ export default function Dashboard() {
                                         </FormControl>
                                     </>
                                 ) : null}
+                                <Text>
+                                    ข้อมูลการสมัครสามารถแก้ไขได้ในภายหลัง
+                                    การสมัครจะยังไม่ยืนยันจนกว่าจะทำการชำระเงินเสร็จสิ้น
+                                    หากชำระเงินแล้ว จะไม่สามารถแก้ไขข้อมูลได้
+                                </Text>
                                 <Button onClick={handleAddAthlete} w="sm">
                                     ยืนยันการสมัคร
                                 </Button>
@@ -913,7 +918,7 @@ export default function Dashboard() {
                                 {updateAthlete.team === "true" ||
                                 updateAthlete.team == true ? (
                                     <>
-                                        <FormControl id="teamName" isRequired>
+                                        <FormControl id="teamName">
                                             <FormLabel>ชื่อทีม</FormLabel>
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
@@ -953,7 +958,7 @@ export default function Dashboard() {
                                                 }}
                                             />
                                         </FormControl>
-                                        <FormControl id="teamCode" isRequired>
+                                        <FormControl id="teamCode">
                                             <FormLabel>รหัสทีม</FormLabel>
                                             {updateAthlete.team_code == "" ? (
                                                 <ChakraReactCreatableSelect
@@ -988,6 +993,11 @@ export default function Dashboard() {
                                         </FormControl>
                                     </>
                                 ) : null}
+                                <Text>
+                                    ข้อมูลการสมัครสามารถแก้ไขได้ในภายหลัง
+                                    การสมัครจะยังไม่ยืนยันจนกว่าจะทำการชำระเงินเสร็จสิ้น
+                                    หากชำระเงินแล้ว ไม่สามารถแก้ไขข้อมูลได้
+                                </Text>
                             </VStack>
                         </ModalBody>
                         <ModalFooter>
