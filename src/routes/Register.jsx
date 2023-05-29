@@ -36,8 +36,8 @@ export default function Register() {
     const navigate = useNavigate();
 
     const handleRegister = async () => {
-        if (checkRegisterData) {
-            if (checkIfUserExists) {
+        if (checkRegisterData()) {
+            if (checkIfUserExists()) {
                 const { data, error } = await supabase.from("users").insert([
                     {
                         name_thai: nameThai,
