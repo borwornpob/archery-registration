@@ -320,6 +320,7 @@ export default function Dashboard() {
                 alert("เพิ่มนักกีฬาสำเร็จ");
                 onClose();
                 clearNewAthlete();
+                clearUpdateAthlete();
                 fetchAthletes(newAthlete.club);
                 fetchAvailiableTeams();
             }
@@ -343,6 +344,25 @@ export default function Dashboard() {
             team_code: "",
             club_code: newAthlete.club_code,
             created_by: newAthlete.created_by,
+        });
+    };
+
+    const clearUpdateAthlete = () => {
+        setUpdateAthlete({
+            id: "",
+            name_thai: "",
+            name_english: "",
+            surname_thai: "",
+            surname_english: "",
+            sex: "",
+            division: "",
+            class: "",
+            club: updateAthlete.club,
+            team: "",
+            team_name: "",
+            team_code: "",
+            club_code: updateAthlete.club_code,
+            created_by: updateAthlete.created_by,
         });
     };
 
@@ -703,7 +723,12 @@ export default function Dashboard() {
                                 {newAthlete.team === "true" ? (
                                     <>
                                         <FormControl id="teamName">
-                                            <FormLabel>ชื่อทีม</FormLabel>
+                                            <FormLabel>
+                                                ชื่อทีม
+                                                (สำหรับการแข่งขันประเภททีม 3 คน
+                                                เท่านั้น ไม่ใช่สังกัด เช่น
+                                                ArrowHitz Recurve 01)
+                                            </FormLabel>
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
                                                 onChange={(e) => {
@@ -739,7 +764,11 @@ export default function Dashboard() {
                                             />
                                         </FormControl>
                                         <FormControl id="teamCode">
-                                            <FormLabel>รหัสทีม</FormLabel>
+                                            <FormLabel>
+                                                รหัสทีม (เป็นตัวย่อของชื่อทีม
+                                                จำนวนไม่เกิน 6 ตัวอักษร เช่น
+                                                AHZ_01)
+                                            </FormLabel>
                                             {newAthlete.team_code == "" ? (
                                                 <ChakraReactCreatableSelect
                                                     onChange={(e) => {
@@ -761,7 +790,6 @@ export default function Dashboard() {
                                                                 e.target.value,
                                                         });
                                                     }}
-                                                    readOnly
                                                 />
                                             )}
                                         </FormControl>
@@ -917,7 +945,12 @@ export default function Dashboard() {
                                 updateAthlete.team == true ? (
                                     <>
                                         <FormControl id="teamName">
-                                            <FormLabel>ชื่อทีม</FormLabel>
+                                            <FormLabel>
+                                                ชื่อทีม
+                                                (สำหรับการแข่งขันประเภททีม 3 คน
+                                                เท่านั้น ไม่ใช่สังกัด เช่น
+                                                ArrowHitz Recurve 01)
+                                            </FormLabel>
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
                                                 onChange={(e) => {
@@ -956,7 +989,11 @@ export default function Dashboard() {
                                             />
                                         </FormControl>
                                         <FormControl id="teamCode">
-                                            <FormLabel>รหัสทีม</FormLabel>
+                                            <FormLabel>
+                                                รหัสทีม (เป็นตัวย่อของชื่อทีม
+                                                จำนวนไม่เกิน 6 ตัวอักษร เช่น
+                                                AHZ_01)
+                                            </FormLabel>
                                             {updateAthlete.team_code == "" ? (
                                                 <ChakraReactCreatableSelect
                                                     onChange={(e) => {
@@ -984,7 +1021,6 @@ export default function Dashboard() {
                                                                 e.target.value,
                                                         });
                                                     }}
-                                                    readOnly
                                                 />
                                             )}
                                         </FormControl>
