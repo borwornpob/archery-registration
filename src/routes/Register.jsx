@@ -119,7 +119,7 @@ export default function Register() {
             surnameEng === "" ||
             club === "" ||
             phoneNumber === "" ||
-            checkThaiNationalID(nationalID) ||
+            nationalID === "" ||
             password === "" ||
             (clubCode === "" && clubCode.length > 7)
         ) {
