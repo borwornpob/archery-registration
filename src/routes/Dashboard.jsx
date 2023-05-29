@@ -198,7 +198,17 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-        if (updateAthlete.team === "false" || updateAthlete.team == "false") {
+        if (
+            updateAthlete.team === "false" ||
+            updateAthlete.team == "false" ||
+            updateAthlete.team == false
+        ) {
+            setUpdateAthlete({
+                ...updateAthlete,
+                team_name: "",
+                team_code: "",
+            });
+        } else {
             setUpdateAthlete({
                 ...updateAthlete,
                 team_name: "",
@@ -1029,7 +1039,6 @@ export default function Dashboard() {
                                 <Text>
                                     ข้อมูลการสมัครสามารถแก้ไขได้ในภายหลัง
                                     การสมัครจะยังไม่ยืนยันจนกว่าจะทำการชำระเงินเสร็จสิ้น
-                                    หากชำระเงินแล้ว ไม่สามารถแก้ไขข้อมูลได้
                                 </Text>
                             </VStack>
                         </ModalBody>
