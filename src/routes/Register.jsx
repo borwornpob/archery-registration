@@ -194,7 +194,7 @@ export default function Register() {
                 </FormControl>
                 <FormControl id="club" isRequired>
                     <FormLabel>
-                        ชมรม (สามารถพิมพ์สร้างชื่อชมรมใหม่ได้)
+                        ชมรม (สามารถพิมพ์สร้างชื่อชมรมใหม่ได้และกดปุ่ม Create)
                     </FormLabel>
                     <ChakraReactCreatableSelect
                         options={clubs}
@@ -229,7 +229,9 @@ export default function Register() {
                     </FormControl>
                 ) : (
                     <FormControl id="clubCode" isRequired>
-                        <FormLabel>รหัสชมรม</FormLabel>
+                        <FormLabel>
+                            ตัวย่อชื่อชมรม (ตั้งไม่เกิน 6 ตัวอักษร)
+                        </FormLabel>
                         <Input
                             placeholder="รหัสชมรม"
                             value={clubCode}
