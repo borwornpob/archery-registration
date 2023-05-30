@@ -241,31 +241,7 @@ export default function Dashboard() {
         ) {
             return false;
         } else {
-            if (updateAthlete.team === "true" || updateAthlete.team == true) {
-                if (
-                    updateAthlete.team_name === "" ||
-                    updateAthlete.team_code === ""
-                ) {
-                    return false;
-                } else if (
-                    updateAthlete.team === "false" ||
-                    updateAthlete.team == false
-                ) {
-                    setUpdateAthlete({
-                        ...updateAthlete,
-                        team_name: "",
-                        team_code: "",
-                    });
-                    return true;
-                } else if (updateAthlete.team_code.length > 6) {
-                    alert("รหัสทีมต้องมีความยาวไม่เกิน 6 ตัวอักษร");
-                    return false;
-                } else {
-                    return true;
-                }
-            } else {
-                return true;
-            }
+            return true;
         }
     };
 
@@ -283,23 +259,7 @@ export default function Dashboard() {
         ) {
             return false;
         } else {
-            if (newAthlete.team === "true") {
-                if (
-                    newAthlete.team_name === "" ||
-                    newAthlete.team_code === ""
-                ) {
-                    return false;
-                } else {
-                    if (newAthlete.team_code.length > 6) {
-                        alert("รหัสทีมต้องมีความยาวไม่เกิน 6 ตัวอักษร");
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            } else {
-                return true;
-            }
+            return true;
         }
     };
 
