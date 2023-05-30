@@ -215,7 +215,7 @@ export default function Register() {
                 {clubCode != "" &&
                 clubData.find((c) => c.club_name === club)?.club_code ? (
                     <FormControl id="clubCode" isRequired>
-                        <FormLabel>รหัสชมรม</FormLabel>
+                        <FormLabel>ตัวย่อชื่อชมรม ไม่เกิน 4 ตัวอักษร</FormLabel>
                         <Input
                             placeholder="รหัสชมรม"
                             value={clubCode}
