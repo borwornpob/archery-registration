@@ -55,6 +55,7 @@ export default function Register() {
                 if (error) {
                     alert(error.message);
                 } else {
+                    asyncFetchClubs();
                     alert("ลงทะเบียนสำเร็จ");
                     navigate("/");
                 }
@@ -105,7 +106,6 @@ export default function Register() {
 
     const addClubIfNotExist = async () => {
         const { data, error } = await supabase
-
             .from("clubs")
             .select("*")
             .eq("club_name", club);
