@@ -550,7 +550,10 @@ export default function Dashboard() {
                                     <Td color="brand.100">
                                         {athlete.payment_status}
                                     </Td>
-                                    {athlete.payment_status === "unconfirmed" &&
+                                    {(athlete.payment_status ===
+                                        "unconfirmed" ||
+                                        athlete.payment_status ===
+                                            "waiting to confirm") &&
                                     athlete.created_by == id ? (
                                         <Td color="brand.100">
                                             <Button

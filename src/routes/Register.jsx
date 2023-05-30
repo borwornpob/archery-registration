@@ -147,7 +147,8 @@ export default function Register() {
             phoneNumber === "" ||
             nationalID === "" ||
             password === "" ||
-            (clubCode === "" && clubCode.length > 7)
+            clubCode === "" ||
+            clubCode.length > 7
         ) {
             return false;
         } else {
