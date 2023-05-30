@@ -38,6 +38,7 @@ export default function Register() {
     const handleRegister = async () => {
         if (checkRegisterData()) {
             if (checkIfUserExists()) {
+                addClubIfNotExist();
                 const { data, error } = await supabase.from("users").insert([
                     {
                         name_thai: nameThai,
@@ -98,6 +99,31 @@ export default function Register() {
                 return false;
             } else {
                 return true;
+            }
+        }
+    };
+
+    const addClubIfNotExist = async () => {
+        const { data, error } = await supabase
+
+            .from("clubs")
+            .select("*")
+            .eq("club_name", club);
+        if (error) {
+            alert(error.message);
+        } else {
+            if (data.length === 0) {
+                const { data, error } = await supabase.from("clubs").insert([
+                    {
+                        club_name: club,
+                        club_code: clubCode,
+                    },
+                ]);
+                if (error) {
+                    alert(error.message);
+                } else {
+                    alert("เพิ่มชมรมสำเร็จ");
+                }
             }
         }
     };
