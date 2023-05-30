@@ -193,7 +193,9 @@ export default function Register() {
                     />
                 </FormControl>
                 <FormControl id="club" isRequired>
-                    <FormLabel>ชมรม</FormLabel>
+                    <FormLabel>
+                        ชมรม (สามารถพิมพ์สร้างชื่อชมรมใหม่ได้)
+                    </FormLabel>
                     <ChakraReactCreatableSelect
                         options={clubs}
                         onChange={(e) => {
@@ -216,7 +218,9 @@ export default function Register() {
                 {clubCode != "" &&
                 clubData.find((c) => c.club_name === club)?.club_code ? (
                     <FormControl id="clubCode" isRequired>
-                        <FormLabel>ตัวย่อชื่อชมรม ไม่เกิน 4 ตัวอักษร</FormLabel>
+                        <FormLabel>
+                            ตัวย่อชื่อชมรม (ตั้งไม่เกิน 6 ตัวอักษร)
+                        </FormLabel>
                         <Input
                             placeholder="รหัสชมรม"
                             value={clubCode}
