@@ -111,6 +111,15 @@ export default function Payment() {
             <Heading>ชำระเงิน</Heading>
             <Text>ชื่อชมรม: {club}</Text>
             <Text>จำนวนนักกีฬาที่ยังไม่ได้ชำระเงิน: {athletes.length} คน</Text>
+            {athletes.length > 0 ? (
+                <VStack alignItems="start">
+                    {athletes.map((athlete) => (
+                        <Text key={athlete.id}>
+                            นักกีฬา: {athlete.name_thai} {athlete.surname_thai}
+                        </Text>
+                    ))}
+                </VStack>
+            ) : null}
             <Text>จำนวนเงินที่ต้องชำระ: {amount} บาท</Text>
             <Image src={payQr} fit="scale-down" />
             <Text>
