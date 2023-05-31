@@ -31,7 +31,7 @@ import {
     HStack,
     Wrap,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { supabase } from "../helper/supabase";
 import useWindowDimensions from "../helper/dimensions";
 import { UserContext } from "../helper/UserContext";
@@ -701,7 +701,11 @@ export default function Dashboard() {
                                                 (สำหรับการแข่งขันประเภททีม 3 คน
                                                 เท่านั้น ไม่ใช่สังกัด เช่น
                                                 ArrowHitz Recurve 01)
+                                                <Text color="red.500">
+                                                    ภาษาอังกฤษเท่านั้น
+                                                </Text>
                                             </FormLabel>
+
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
                                                 onChange={(e) => {
@@ -741,6 +745,9 @@ export default function Dashboard() {
                                                 รหัสทีม (เป็นตัวย่อของชื่อทีม
                                                 จำนวนไม่เกิน 6 ตัวอักษร เช่น
                                                 AHZ_01)
+                                                <Text color="red.500">
+                                                    ภาษาอังกฤษเท่านั้น
+                                                </Text>
                                             </FormLabel>
                                             {newAthlete.team_code == "" ? (
                                                 <ChakraReactCreatableSelect
@@ -923,6 +930,9 @@ export default function Dashboard() {
                                                 (สำหรับการแข่งขันประเภททีม 3 คน
                                                 เท่านั้น ไม่ใช่สังกัด เช่น
                                                 ArrowHitz Recurve 01)
+                                                <Text color="red.500">
+                                                    ภาษาอังกฤษเท่านั้น
+                                                </Text>
                                             </FormLabel>
                                             <ChakraReactCreatableSelect
                                                 options={availiableTeamNames}
@@ -966,6 +976,9 @@ export default function Dashboard() {
                                                 รหัสทีม (เป็นตัวย่อของชื่อทีม
                                                 จำนวนไม่เกิน 6 ตัวอักษร เช่น
                                                 AHZ_01)
+                                                <Text color="red.500">
+                                                    ภาษาอังกฤษเท่านั้น
+                                                </Text>
                                             </FormLabel>
                                             {updateAthlete.team_code == "" ? (
                                                 <ChakraReactCreatableSelect
