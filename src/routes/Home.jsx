@@ -5,6 +5,14 @@ import {
     VStack,
     HStack,
     Button,
+    useDisclosure,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
 } from "@chakra-ui/react";
 import React, { useState, useContext } from "react";
 import { UserContext } from "../helper/UserContext";
@@ -17,6 +25,8 @@ export default function Home() {
 
     let { width } = useWindowDimensions();
     width = width * 0.88;
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <Container>
@@ -59,6 +69,7 @@ export default function Home() {
                 <Text w={width}>
                     สามารถส่งหลักฐานการชำระเงินค่าสมัครได้ที่ lineID: @562rlwol
                 </Text>
+
                 <Button
                     size="lg"
                     variant="secondary"
@@ -69,6 +80,90 @@ export default function Home() {
                 >
                     <Text>ตรวจสอบรายชื่อนักกีฬา</Text>
                 </Button>
+                <Button
+                    size="lg"
+                    variant="secondary"
+                    width={width}
+                    onClick={onOpen}
+                >
+                    <Text>นโยบายความเป็นส่วนตัว</Text>
+                </Button>
+
+                <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Privacy Policy</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <Text>
+                                This Privacy Policy describes how your personal
+                                information is collected, used, and shared when
+                                you sign up for the Salaya Indoor Archery Games
+                                2023.
+                            </Text>
+                            <Container mt="1rem" p={0}>
+                                <Text fontSize="2xl" as="b">
+                                    PERSONAL INFORMATION WE COLLECT
+                                </Text>
+                            </Container>
+
+                            <Text>
+                                When you register, we collect certain
+                                information from you, including your name,
+                                email, national ID, and phone number.
+                            </Text>
+                            <Container mt="1rem" p={0}>
+                                <Text fontSize="2xl" as="b">
+                                    HOW DO WE USE YOUR PERSONAL INFORMATION?
+                                </Text>
+                            </Container>
+
+                            <Text>
+                                We use the information we collect to: Register
+                                you for the Salaya Indoor Archery Games 2023
+                                Communicate with you Provide you with
+                                information or advertising relating to our
+                                products or services
+                            </Text>
+                            <Container mt="1rem" p={0}>
+                                <Text fontSize="2xl" as="b">
+                                    SHARING YOUR PERSONAL INFORMATION
+                                </Text>
+                            </Container>
+
+                            <Text>
+                                We do not share your Personal Information with
+                                third parties. We only use your information to
+                                ensure your successful participation in the
+                                Salaya Indoor Archery Games 2023.
+                            </Text>
+                            <Container mt="1rem" p={0}>
+                                <Text fontSize="2xl" as="b">
+                                    YOUR RIGHTS
+                                </Text>
+                            </Container>
+                            <Text>
+                                You have the right to access the personal
+                                information we hold about you and to ask that
+                                your personal information be updated, corrected,
+                                or deleted. If you would like to exercise this
+                                right, please contact us through the contact
+                                information below.
+                            </Text>
+                            <Container mt="1rem" p={0}>
+                                <Text fontSize="2xl" as="b">
+                                    CONTACT US
+                                </Text>
+                            </Container>
+                            <Text>
+                                For more information about our privacy
+                                practices, if you have questions, or if you
+                                would like to make a complaint, please contact
+                                us by lineID: @562rlwol
+                            </Text>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
             </VStack>
         </Container>
     );
