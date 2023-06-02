@@ -35,13 +35,25 @@ export const Button = defineStyleConfig({
                 bg: "brand.500",
                 color: "white",
             },
+            _disabled: {
+                bg: "brand.300",
+                color: "white",
+                _hover: {
+                    bg: "brand.300",
+                    color: "black",
+                },
+            },
         },
         secondary: {
             bg: "brand.400",
             color: "brand.100",
             _hover: {
                 bg: "brand.500",
-                color: "white",
+                color: "black",
+            },
+            _disabled: {
+                bg: "brand.400",
+                color: "brand.100",
             },
         },
     },
