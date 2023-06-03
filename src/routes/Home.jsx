@@ -34,9 +34,6 @@ export default function Home() {
                 <Heading w={width}>
                     สมัครเข้าร่วมการแข่งขัน "ศาลายา เกมส์ 2023" ได้ที่นี่
                 </Heading>
-                <Heading w={width} color="red.600">
-                    ขณะนี้ปิดการรับสมัครชั่วคราว
-                </Heading>
                 <Text w={width}>
                     1. ลงทะเบียนเพื่อรับ username/password
                     เพื่อใช้สำหรับการสมัครเข้าร่วมการแข่งขัน
@@ -44,7 +41,6 @@ export default function Home() {
                 <Button
                     size="lg"
                     variant="primary"
-                    disabled
                     width={width}
                     onClick={() => {
                         navigate("/register");
@@ -59,7 +55,6 @@ export default function Home() {
                 <Button
                     size="lg"
                     variant="secondary"
-                    disabled
                     width={width}
                     onClick={() => {
                         navigate("/login");

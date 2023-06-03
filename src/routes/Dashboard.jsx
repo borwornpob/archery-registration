@@ -86,13 +86,13 @@ export default function Dashboard() {
     const type = {
         Recurve: [
             "U10 ปิดรับสมัคร (เต็ม)",
-            "U12",
+            "U12 ปิดรับสมัคร (เต็ม)",
             "U15 ปิดรับสมัคร (เต็ม)",
             "U18 ปิดรับสมัคร (เต็ม)",
-            "Open",
+            "Open ปิดรับสมัคร (เต็ม)",
         ],
-        Compound: ["U12", "U18", "Open"],
-        Barebow: ["U12", "U18", "Open"],
+        Compound: ["U12 ปิดรับสมัคร (เต็ม)", "U18 ปิดรับสมัคร (เต็ม)", "Open"],
+        Barebow: ["U12 ปิดรับสมัคร (เต็ม)", "U18 ปิดรับสมัคร (เต็ม)", "Open"],
     };
 
     const { isOpen, onOpen, onClose } = useDisclosure();
