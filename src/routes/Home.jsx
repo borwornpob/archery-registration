@@ -42,6 +42,7 @@ export default function Home() {
                     size="lg"
                     variant="primary"
                     width={width}
+                    disabled
                     onClick={() => {
                         navigate("/register");
                     }}
@@ -56,6 +57,7 @@ export default function Home() {
                     size="lg"
                     variant="secondary"
                     width={width}
+                    disabled
                     onClick={() => {
                         navigate("/login");
                     }}
@@ -74,6 +76,7 @@ export default function Home() {
                     size="lg"
                     variant="secondary"
                     width={width}
+                    disabled
                     onClick={() => {
                         navigate("/athletecheck");
                     }}
