@@ -6,6 +6,7 @@ import AthleteCheck from "./routes/AthleteCheck";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Payment from "./routes/Payment";
+import AdminDashboard from "./routes/Admin";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { UserProvider } from "./helper/UserContext";
@@ -23,6 +24,10 @@ export default function App() {
                             <Route
                                 path="/athletecheck"
                                 element={<AthleteCheck />}
+                            />
+                            <Route
+                                path="/admindashboard"
+                                element={<AdminDashboard />}
                             />
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
