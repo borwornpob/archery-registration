@@ -84,13 +84,7 @@ export default function Dashboard() {
     const [searchResults, setSearchResults] = useState([]);
 
     const type = {
-        Recurve: [
-            "U10",
-            "U12",
-            "U15 ปิดรับสมัคร (เต็ม)",
-            "U18 ปิดรับสมัคร (เต็ม)",
-            "Open",
-        ],
+        Recurve: ["U10", "U12", "U15", "U18", "Open"],
         Compound: ["U12", "U18", "Open"],
         Barebow: ["U12", "U18", "Open"],
     };

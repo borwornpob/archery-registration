@@ -32,7 +32,7 @@ export default function Home() {
         <Container>
             <VStack>
                 <Heading w={width}>
-                    สมัครเข้าร่วมการแข่งขัน "ศาลายา เกมส์ 2023" ได้ที่นี่
+                    สมัครเข้าร่วมการแข่งขันยิงธนู "บางกอกเกมส์ 2023" ได้ที่นี่
                 </Heading>
                 <Text w={width}>
                     1. ลงทะเบียนเพื่อรับ username/password
@@ -42,7 +42,6 @@ export default function Home() {
                     size="lg"
                     variant="primary"
                     width={width}
-                    disabled
                     onClick={() => {
                         navigate("/register");
                     }}
@@ -57,7 +56,6 @@ export default function Home() {
                     size="lg"
                     variant="secondary"
                     width={width}
-                    disabled
                     onClick={() => {
                         navigate("/login");
                     }}
@@ -76,7 +74,6 @@ export default function Home() {
                     size="lg"
                     variant="secondary"
                     width={width}
-                    disabled
                     onClick={() => {
                         navigate("/athletecheck");
                     }}
@@ -101,8 +98,7 @@ export default function Home() {
                             <Text>
                                 This Privacy Policy describes how your personal
                                 information is collected, used, and shared when
-                                you sign up for the Salaya Indoor Archery Games
-                                2023.
+                                you sign up for the Bangkok Game 2023.
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
@@ -123,10 +119,9 @@ export default function Home() {
 
                             <Text>
                                 We use the information we collect to: Register
-                                you for the Salaya Indoor Archery Games 2023
-                                Communicate with you Provide you with
-                                information or advertising relating to our
-                                products or services
+                                you for the Bangkok Game 2023 Communicate with
+                                you Provide you with information or advertising
+                                relating to our products or services
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
@@ -138,7 +133,7 @@ export default function Home() {
                                 We do not share your Personal Information with
                                 third parties. We only use your information to
                                 ensure your successful participation in the
-                                Salaya Indoor Archery Games 2023.
+                                Bangkok Game 2023.
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
