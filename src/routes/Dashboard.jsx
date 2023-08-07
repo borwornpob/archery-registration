@@ -675,7 +675,7 @@ export default function Dashboard() {
                                         )}
                                     </Select>
                                 </FormControl>
-                                <FormControl id="team" isRequired>
+                                <FormControl id="team" isRequired isDisabled>
                                     <FormLabel>Team</FormLabel>
                                     <Select
                                         placeholder="ต้องการเข้าร่วมการแข่งขันในรูปแบบทีมหรือไม่"
@@ -693,6 +693,11 @@ export default function Dashboard() {
                                         </option>
                                     </Select>
                                 </FormControl>
+                                <Text>
+                                    หากต้องการสมัครเข้าร่วมแข่งขันประเภททีม
+                                    กรุณาส่งรายชื่อนักกีฬาที่เข้าร่วมแข่งขันในทีมเดียวกัน
+                                    มาที่ไลน์ @youngblood.archery
+                                </Text>
                                 {newAthlete.team === "true" ? (
                                     <>
                                         <FormControl id="teamName">
@@ -903,7 +908,7 @@ export default function Dashboard() {
                                         )}
                                     </Select>
                                 </FormControl>
-                                <FormControl id="team" isRequired>
+                                <FormControl id="team" isRequired isDisabled>
                                     <FormLabel>Team</FormLabel>
                                     <Select
                                         placeholder="ต้องการเข้าร่วมการแข่งขันในรูปแบบทีมหรือไม่"
@@ -921,6 +926,11 @@ export default function Dashboard() {
                                         </option>
                                     </Select>
                                 </FormControl>
+                                <Text>
+                                    หากต้องการสมัครเข้าร่วมแข่งขันประเภททีม
+                                    กรุณาส่งรายชื่อนักกีฬาที่เข้าร่วมแข่งขันในทีมเดียวกัน
+                                    มาที่ไลน์ @youngblood.archery
+                                </Text>
                                 {updateAthlete.team === "true" ||
                                 updateAthlete.team == true ? (
                                     <>

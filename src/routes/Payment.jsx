@@ -124,7 +124,8 @@ export default function Payment() {
             <Image src={payQr} fit="scale-down" />
             <Text>
                 เมื่อทำการชำระเงินผ่าน qrcode เรียบร้อยแล้ว ให้ส่งสลิปไปที่
-                lineID: @562rlwol พร้อมแจ้งชื่อสังกัด เพื่อยืนยันการชำระเงินครับ
+                lineID: @youngblood.archery พร้อมแจ้งชื่อสังกัด
+                เพื่อยืนยันการชำระเงินครับ
             </Text>
             {athletes.length > 0 ? (
                 <Button variant="primary" onClick={handlePayment}>
