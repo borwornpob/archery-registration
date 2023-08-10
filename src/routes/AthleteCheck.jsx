@@ -41,7 +41,10 @@ export default function AthleteCheck() {
     const [searchResult, setSearchResult] = useState([]);
 
     const fetchAthletes = async () => {
-        const { data, error } = await supabase.from("athletes").select("*");
+        const { data, error } = await supabase
+            .from("athletes")
+            .select("*")
+            .order("created_at", { ascending: false });
         if (error) {
             alert(error.message);
         } else {
@@ -87,6 +90,7 @@ export default function AthleteCheck() {
                 <Table variant="simple" backgroundColor="brand.400">
                     <Thead>
                         <Tr>
+                            <Th color="brand.100">ID</Th>
                             <Th color="brand.100">ชื่อ</Th>
                             <Th color="brand.100">นามสกุล</Th>
                             <Th color="brand.100">ชื่อ (ภาษาอังกฤษ)</Th>
@@ -101,6 +105,7 @@ export default function AthleteCheck() {
                     <Tbody>
                         {searchResult.map((athlete) => (
                             <Tr key={athlete.id}>
+                                <Td color="brand.100">{athlete.id}</Td>
                                 <Td color="brand.100">{athlete.name_thai}</Td>
                                 <Td color="brand.100">
                                     {athlete.surname_thai}
