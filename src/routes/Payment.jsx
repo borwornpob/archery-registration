@@ -39,7 +39,7 @@ export default function Payment() {
     const navigate = useNavigate();
 
     const calculateAmount = async (club, id) => {
-        const fee = 1000;
+        const fee = 1300;
         let allAmount = 0;
         //fetch how many athletes in the club
         //multiply by 1000
