@@ -84,9 +84,17 @@ export default function Dashboard() {
     const [searchResults, setSearchResults] = useState([]);
 
     const type = {
-        Recurve: ["U10", "U12", "U15", "U18", "Open"],
-        Compound: ["U12", "U18", "Open"],
-        Barebow: ["U12", "U18", "Open"],
+        Recurve: [
+            "U10 18m",
+            "U12 30m",
+            "U15 30m",
+            "U18 30m",
+            "U18 50m",
+            "Open 30m",
+            "Open 70m",
+        ],
+        Compound: ["U12 30m", "U18 30m", "U18 50m", "Open 30m", "Open 50m"],
+        Barebow: ["U12 30m", "U18 30m", "U18 50m", "Open 30m", "Open 50m"],
     };
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -451,6 +459,10 @@ export default function Dashboard() {
             >
                 สมัครเข้าร่วมการแข่งขัน
             </Button>
+            <Text mt="1rem" color="red.500">
+                หากต้องการสมัครมากกว่าหนึ่งระยะขึ้นไป กรุณาเพิ่มนักกีฬาอีกครั้ง
+                ในระบบสามารถมีรายชื่อเดียวกันได้หลายระยะ
+            </Text>
             <FormControl id="search" mt="1rem">
                 <FormLabel>ค้นหานักกีฬา</FormLabel>
                 <Input

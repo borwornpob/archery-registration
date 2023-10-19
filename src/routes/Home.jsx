@@ -32,7 +32,8 @@ export default function Home() {
         <Container>
             <VStack>
                 <Heading w={width}>
-                    สมัครเข้าร่วมการแข่งขันยิงธนู "บางกอกเกมส์ 2023" ได้ที่นี่
+                    สมัครเข้าร่วมการแข่งขันยิงธนู "บ่อทองบุรี เกมส์ 2023"
+                    ได้ที่นี่
                 </Heading>
                 <Text w={width}>
                     1. ลงทะเบียนเพื่อรับ username/password
@@ -67,7 +68,8 @@ export default function Home() {
                     ชั่วโมง เพื่อรักษาสิทธิ์การสมัคร
                 </Text>
                 <Text w={width}>
-                    สามารถส่งหลักฐานการชำระเงินค่าสมัครได้ที่ lineID: @562rlwol
+                    สามารถส่งหลักฐานการชำระเงินค่าสมัครได้ที่ lineID:
+                    @youngblood.archery
                 </Text>
 
                 <Button
@@ -98,7 +100,7 @@ export default function Home() {
                             <Text>
                                 This Privacy Policy describes how your personal
                                 information is collected, used, and shared when
-                                you sign up for the Bangkok Game 2023.
+                                you sign up for the Bothongburi Game 2023.
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
@@ -119,9 +121,9 @@ export default function Home() {
 
                             <Text>
                                 We use the information we collect to: Register
-                                you for the Bangkok Game 2023 Communicate with
-                                you Provide you with information or advertising
-                                relating to our products or services
+                                you for the Bothongburi Game 2023 Communicate
+                                with you Provide you with information or
+                                advertising relating to our products or services
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
@@ -133,7 +135,7 @@ export default function Home() {
                                 We do not share your Personal Information with
                                 third parties. We only use your information to
                                 ensure your successful participation in the
-                                Bangkok Game 2023.
+                                Bothongburi Game 2023.
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
@@ -157,7 +159,7 @@ export default function Home() {
                                 For more information about our privacy
                                 practices, if you have questions, or if you
                                 would like to make a complaint, please contact
-                                us by lineID: @562rlwol
+                                us by lineID: @youngblood.archery
                             </Text>
                         </ModalBody>
                     </ModalContent>
