@@ -93,13 +93,9 @@ export default function AthleteCheck() {
                             <Th color="brand.100">ID</Th>
                             <Th color="brand.100">ชื่อ</Th>
                             <Th color="brand.100">นามสกุล</Th>
-                            <Th color="brand.100">ชื่อ (ภาษาอังกฤษ)</Th>
-                            <Th color="brand.100">นามสกุล (ภาษาอังกฤษ)</Th>
-                            <Th color="brand.100">เพศ</Th>
                             <Th color="brand.100">Division</Th>
                             <Th color="brand.100">Class</Th>
                             <Th color="brand.100">Club</Th>
-                            <Th color="brand.100">Team</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -110,17 +106,9 @@ export default function AthleteCheck() {
                                 <Td color="brand.100">
                                     {athlete.surname_thai}
                                 </Td>
-                                <Td color="brand.100">
-                                    {athlete.name_english}
-                                </Td>
-                                <Td color="brand.100">
-                                    {athlete.surname_english}
-                                </Td>
-                                <Td color="brand.100">{athlete.sex}</Td>
                                 <Td color="brand.100">{athlete.division}</Td>
                                 <Td color="brand.100">{athlete.class}</Td>
                                 <Td color="brand.100">{athlete.club}</Td>
-                                <Td color="brand.100">{athlete.team_name}</Td>
                             </Tr>
                         ))}
                     </Tbody>

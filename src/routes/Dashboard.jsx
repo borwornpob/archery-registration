@@ -60,6 +60,7 @@ export default function Dashboard() {
         team_name: "",
         team_code: "",
         created_by: "",
+        telnumber: "",
     });
     const [updateAthlete, setUpdateAthlete] = useState({
         id: "",
@@ -76,6 +77,7 @@ export default function Dashboard() {
         team_name: "",
         team_code: "",
         created_by: "",
+        telnumber: "",
     });
 
     const [typeModal, setTypeModal] = useState("add");
@@ -85,16 +87,28 @@ export default function Dashboard() {
 
     const type = {
         Recurve: [
-            "U10 18m",
-            "U12 30m",
-            "U15 30m",
-            "U18 30m",
-            "U18 50m",
-            "Open 30m",
-            "Open 70m",
+            "U10 18m (แข่งวันที่ 2-3/10/66)",
+            "U12 30m (แข่งวันที่ 2-3/10/66)",
+            "U15 30m (แข่งวันที่ 2-3/10/66)",
+            "U18 30m (แข่งวันที่ 2-3/10/66)",
+            "Open 30m (แข่งวันที่ 2-3/10/66)",
+            "U18 50m (แข่งวันที่ 4-5/10/66)",
+            "Open 70m (แข่งวันที่ 4-5/10/66)",
         ],
-        Compound: ["U12 30m", "U18 30m", "U18 50m", "Open 30m", "Open 50m"],
-        Barebow: ["U12 30m", "U18 30m", "U18 50m", "Open 30m", "Open 50m"],
+        Compound: [
+            "U12 30m (แข่งวันที่ 2-3/10/66)",
+            "U18 30m (แข่งวันที่ 2-3/10/66)",
+            "Open 30m (แข่งวันที่ 2-3/10/66)",
+            "U18 50m (แข่งวันที่ 4-5/10/66)",
+            "Open 50m (แข่งวันที่ 4-5/10/66)",
+        ],
+        Barebow: [
+            "U12 30m (แข่งวันที่ 2-3/10/66)",
+            "U18 30m (แข่งวันที่ 2-3/10/66)",
+            "Open 30m (แข่งวันที่ 2-3/10/66)",
+            "U18 50m (แข่งวันที่ 4-5/10/66)",
+            "Open 50m (แข่งวันที่ 4-5/10/66)",
+        ],
     };
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -143,6 +157,7 @@ export default function Dashboard() {
                     team_name: updateAthlete.team_name,
                     team_code: updateAthlete.team_code,
                     created_by: updateAthlete.created_by,
+                    telnumber: updateAthlete.telnumber,
                 })
                 .eq("id", updateAthlete.id);
             addTeamIfNotExistForUpdateAthlete();
@@ -245,7 +260,9 @@ export default function Dashboard() {
             updateAthlete.division === "" ||
             updateAthlete.class === "" ||
             updateAthlete.club === "" ||
-            updateAthlete.team === ""
+            updateAthlete.team === "" ||
+            updateAthlete.team_name === "" ||
+            updateAthlete.telnumber === ""
         ) {
             return false;
         } else {
@@ -289,6 +306,7 @@ export default function Dashboard() {
                     team_code: newAthlete.team_code,
                     payment_status: "unconfirmed",
                     created_by: newAthlete.created_by,
+                    telnumber: newAthlete.telnumber,
                 },
             ]);
             addTeamIfNotExist();
@@ -322,6 +340,7 @@ export default function Dashboard() {
             team_code: "",
             club_code: newAthlete.club_code,
             created_by: newAthlete.created_by,
+            telnumber: "",
         });
     };
 
@@ -341,6 +360,7 @@ export default function Dashboard() {
             team_code: "",
             club_code: updateAthlete.club_code,
             created_by: updateAthlete.created_by,
+            telnumber: "",
         });
     };
 
@@ -705,6 +725,20 @@ export default function Dashboard() {
                                         </option>
                                     </Select>
                                 </FormControl>
+                                <FormControl id="telnumber" isRequired>
+                                    <FormLabel>
+                                        เบอร์โทรศัพท์ที่สามารถติดต่อได้
+                                    </FormLabel>
+                                    <Input
+                                        placeholder="เบอร์โทรศัพท์"
+                                        onChange={(e) => {
+                                            setNewAthlete({
+                                                ...newAthlete,
+                                                telnumber: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </FormControl>
                                 <Text>
                                     หากต้องการสมัครเข้าร่วมแข่งขันประเภททีม
                                     กรุณาส่งรายชื่อนักกีฬาที่เข้าร่วมแข่งขันในทีมเดียวกัน
@@ -936,6 +970,21 @@ export default function Dashboard() {
                                             ไม่ต้องการ
                                         </option>
                                     </Select>
+                                </FormControl>
+                                <FormControl id="telnumber" isRequired>
+                                    <FormLabel>
+                                        เบอร์โทรศัพท์ที่สามารถติดต่อได้
+                                    </FormLabel>
+                                    <Input
+                                        placeholder="เบอร์โทรศัพท์"
+                                        value={updateAthlete.telnumber}
+                                        onChange={(e) => {
+                                            setUpdateAthlete({
+                                                ...updateAthlete,
+                                                telnumber: e.target.value,
+                                            });
+                                        }}
+                                    />
                                 </FormControl>
                                 <Text>
                                     หากต้องการสมัครเข้าร่วมแข่งขันประเภททีม
