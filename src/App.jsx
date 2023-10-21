@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import Dashboard from "./routes/Dashboard";
 import AthleteCheck from "./routes/AthleteCheck";
+import AthleteCheckAdmin from "./routes/AthleteCheckAdmin";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Payment from "./routes/Payment";
@@ -28,6 +29,10 @@ export default function App() {
                             <Route
                                 path="/admindashboard"
                                 element={<AdminDashboard />}
+                            />
+                            <Route
+                                path="/athletecheckadmin"
+                                element={<AthleteCheckAdmin />}
                             />
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
