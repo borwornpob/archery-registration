@@ -9,6 +9,7 @@ import {
     FormHelperText,
     Input,
     Button,
+    Link,
     Wrap,
     VStack,
     Image,
@@ -24,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "../helper/supabase";
 import useWindowDimensions from "../helper/dimensions";
 import { UserContext } from "../helper/UserContext";
-import payQr from "../assets/payqr.jpg";
+import payQr from "../assets/payqr.png";
 
 export default function Payment() {
     const [club, setClub] = useState("");
@@ -121,12 +122,23 @@ export default function Payment() {
                 </VStack>
             ) : null}
             <Text>จำนวนเงินที่ต้องชำระ: {amount} บาท</Text>
-            <Image src={payQr} fit="scale-down" />
+            <Image src={payQr} fit="scale-down" boxSize="300px" />
             <Text>
-                เมื่อทำการชำระเงินผ่าน qrcode เรียบร้อยแล้ว ให้ส่งสลิปไปที่
-                lineID: @youngblood.archery พร้อมแจ้งชื่อสังกัด
-                เพื่อยืนยันการชำระเงินครับ
+                ธ.กสิกรไทย ชื่อบัญชี เบญจ์ บวรรนนทกมล เลขที่บัญชี 743-2-50524-8
+                โทร 0982893299
             </Text>
+            <Text>
+                เมื่อทำการชำระเงินผ่าน qrcode เรียบร้อยแล้ว
+                ให้ส่งหลักฐานการโอนเงินไปที่ลิ้งก์ Google Forms ด้านล่างนี้
+            </Text>
+            <Button
+                onClick={() => {
+                    location.href = "https://forms.gle/NfCodW5CAtgsDRue8";
+                }}
+            >
+                <Link>ส่งหลักฐานการโอนเงิน</Link>
+            </Button>
+
             {athletes.length > 0 ? (
                 <Button variant="primary" onClick={handlePayment}>
                     ชำระเงิน
