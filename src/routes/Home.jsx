@@ -67,11 +67,6 @@ export default function Home() {
                     หลังจากยืนยันการสมัคร ให้ทำการชำระเงินค่าสมัครภายใน 24
                     ชั่วโมง เพื่อรักษาสิทธิ์การสมัคร
                 </Text>
-                <Text w={width}>
-                    สามารถส่งหลักฐานการชำระเงินค่าสมัครได้ที่ lineID:
-                    @youngblood.archery
-                </Text>
-
                 <Button
                     size="lg"
                     variant="secondary"
