@@ -35,6 +35,7 @@ export default function Home() {
                     สมัครเข้าร่วมการแข่งขันยิงธนู "บ่อทองบุรี เกมส์ 2023"
                     ได้ที่นี่
                 </Heading>
+                <Heading color="red">ปิดปรับปรุงระบบ</Heading>
                 <Text w={width}>
                     1. ลงทะเบียนเพื่อรับ username/password
                     เพื่อใช้สำหรับการสมัครเข้าร่วมการแข่งขัน
@@ -46,6 +47,7 @@ export default function Home() {
                     onClick={() => {
                         navigate("/register");
                     }}
+                    disabled
                 >
                     <Text>ลงทะเบียน</Text>
                 </Button>
@@ -60,6 +62,7 @@ export default function Home() {
                     onClick={() => {
                         navigate("/login");
                     }}
+                    disabled
                 >
                     <Text>สมัครเข้าร่วมการแข่งขัน</Text>
                 </Button>
@@ -74,6 +77,7 @@ export default function Home() {
                     onClick={() => {
                         navigate("/athletecheck");
                     }}
+                    disabled
                 >
                     <Text>ตรวจสอบรายชื่อนักกีฬา</Text>
                 </Button>
