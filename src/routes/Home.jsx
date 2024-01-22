@@ -47,7 +47,6 @@ export default function Home() {
                     onClick={() => {
                         navigate("/register");
                     }}
-                    disabled
                 >
                     <Text>ลงทะเบียน</Text>
                 </Button>
@@ -62,7 +61,6 @@ export default function Home() {
                     onClick={() => {
                         navigate("/login");
                     }}
-                    disabled
                 >
                     <Text>สมัครเข้าร่วมการแข่งขัน</Text>
                 </Button>
@@ -77,7 +75,6 @@ export default function Home() {
                     onClick={() => {
                         navigate("/athletecheck");
                     }}
-                    disabled
                 >
                     <Text>ตรวจสอบรายชื่อนักกีฬา</Text>
                 </Button>
