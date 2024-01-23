@@ -152,12 +152,12 @@ export default function Home() {
                                     CONTACT US
                                 </Text>
                             </Container>
-                            <Text>
+                            {/* <Text>
                                 For more information about our privacy
                                 practices, if you have questions, or if you
                                 would like to make a complaint, please contact
                                 us by lineID: @youngblood.archery
-                            </Text>
+                            </Text> */}
                         </ModalBody>
                     </ModalContent>
                 </Modal>
