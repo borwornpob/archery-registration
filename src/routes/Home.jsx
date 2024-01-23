@@ -32,10 +32,9 @@ export default function Home() {
         <Container>
             <VStack>
                 <Heading w={width}>
-                    สมัครเข้าร่วมการแข่งขันยิงธนู "บ่อทองบุรี เกมส์ 2023"
-                    ได้ที่นี่
+                    สมัครเข้าร่วมการแข่งขันยิงธนู "Champion Archery Tournament
+                    Stage 4" ได้ที่นี่
                 </Heading>
-                <Heading color="red">ปิดปรับปรุงระบบ</Heading>
                 <Text w={width}>
                     1. ลงทะเบียนเพื่อรับ username/password
                     เพื่อใช้สำหรับการสมัครเข้าร่วมการแข่งขัน
@@ -96,7 +95,8 @@ export default function Home() {
                             <Text>
                                 This Privacy Policy describes how your personal
                                 information is collected, used, and shared when
-                                you sign up for the Bothongburi Game 2023.
+                                you sign up for the Champion Archery Tournament
+                                Stage 4.
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
@@ -117,9 +117,10 @@ export default function Home() {
 
                             <Text>
                                 We use the information we collect to: Register
-                                you for the Bothongburi Game 2023 Communicate
-                                with you Provide you with information or
-                                advertising relating to our products or services
+                                you for the Champion Archery Tournament Stage 4
+                                Communicate with you Provide you with
+                                information or advertising relating to our
+                                products or services
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
@@ -131,7 +132,7 @@ export default function Home() {
                                 We do not share your Personal Information with
                                 third parties. We only use your information to
                                 ensure your successful participation in the
-                                Bothongburi Game 2023.
+                                Champion Archery Tournament Stage 4.
                             </Text>
                             <Container mt="1rem" p={0}>
                                 <Text fontSize="2xl" as="b">
