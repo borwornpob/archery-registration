@@ -74,6 +74,7 @@ export default function Home() {
                     onClick={() => {
                         navigate("/athletecheck");
                     }}
+                    disabled
                 >
                     <Text>ตรวจสอบรายชื่อนักกีฬา</Text>
                 </Button>
