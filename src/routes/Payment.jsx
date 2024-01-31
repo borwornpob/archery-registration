@@ -129,11 +129,12 @@ export default function Payment() {
             </Text>
             <Text>
                 เมื่อทำการชำระเงินผ่าน qrcode เรียบร้อยแล้ว
-                ให้ส่งหลักฐานการโอนเงินไปที่ลิ้งก์ Google Forms ด้านล่างนี้
+                ให้ส่งหลักฐานการโอนเงินไปที่ไลน์ Official
+                คลิ้กปุ่มด้านล่างเพื่อแอดไลน์ Official
             </Text>
             <Button
                 onClick={() => {
-                    location.href = "https://forms.gle/NfCodW5CAtgsDRue8";
+                    location.href = "https://lin.ee/ueepXOh";
                 }}
             >
                 <Link>ส่งหลักฐานการโอนเงิน</Link>
